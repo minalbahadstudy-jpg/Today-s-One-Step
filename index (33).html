@@ -1,0 +1,3276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Today's One Step</title>
+<style>
+  :root{
+    --bg: #FAF6EC;
+    --card: #FFFFFF;
+    --ink: #1A1F1C;
+    --sage: #22C55E;
+    --sage-dark: #16A34A;
+    --amber: #FF9F1C;
+    --line: #E3DCCB;
+    --done: #A9BBA6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family: 'Iowan Old Style','Palatino Linotype', Georgia, serif;
+    padding: 32px 20px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  header{
+    text-align:center;
+    margin-bottom: 28px;
+  }
+  header .eyebrow{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12.5px;
+    color: var(--sage-dark);
+    margin-bottom: 6px;
+  }
+  header h1{
+    font-size: 34px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+  header p{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    color: #6b6558;
+    margin: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .dump{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 26px;
+  }
+  .dump label{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13.5px;
+    color: var(--sage-dark);
+    display:block;
+    margin-bottom: 8px;
+  }
+  .dump textarea{
+    width:100%;
+    min-height: 54px;
+    resize: vertical;
+    border: none;
+    background: transparent;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    outline:none;
+    line-height:1.5;
+  }
+  .dump .row{display:flex;justify-content:flex-end;align-items:center;gap:10px;}
+  .dump .status{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    color: #9a9484;
+  }
+  .dump button{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13.5px;
+    background: var(--sage);
+    color: white;
+    border:none;
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor:pointer;
+  }
+  .dump button:hover{background:var(--sage-dark);}
+
+  .capacity{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 26px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .capacity h3{
+    font-size: 15px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color: var(--sage-dark);
+    margin: 0 0 12px;
+  }
+  .capacity .row2{
+    display:flex;
+    gap: 14px;
+    flex-wrap:wrap;
+    margin-bottom: 12px;
+    align-items:center;
+  }
+  .capacity label{
+    font-size: 13.5px;
+    color: #6b6558;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .capacity input[type=time]{
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .routineRow{
+    display:flex;
+    gap:8px;
+    margin-bottom:8px;
+    align-items:center;
+    flex-wrap: wrap;
+  }
+  .routineRow input[type=text]{
+    flex:1;
+    min-width: 140px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .routineRow input[type=number]{
+    width: 70px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .routineRow input[type=time]{
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--sage-dark);
+  }
+  .routineRow button{
+    border:none;
+    background:transparent;
+    color:#b08a6a;
+    cursor:pointer;
+    font-size: 18px;
+    line-height:1;
+  }
+  .capacity .actions{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 10px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .addRowBtn{
+    font-size: 13.5px;
+    background: transparent;
+    border: 1px dashed var(--line);
+    color: var(--sage-dark);
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor:pointer;
+  }
+  .calcBtn{
+    font-size: 15px;
+    background: var(--amber);
+    color:white;
+    border:none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor:pointer;
+  }
+  .leftoverResult{
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #FAF8F3;
+    border-radius: 10px;
+    font-size: 15px;
+    color: var(--ink);
+    line-height:1.6;
+  }
+  .leftoverResult b{color:var(--sage-dark);}
+
+  .scheduleSplit{
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .scheduleCol{
+    flex: 1;
+    min-width: 220px;
+    background: #FAF8F3;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .scheduleCol h4{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sage-dark);
+    margin: 0 0 8px;
+  }
+  .scheduleBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .scheduleBlock:last-child{ border-bottom: none; }
+  .scheduleBlock .label{ color: var(--ink); }
+  .scheduleBlock .time{ color: var(--sage-dark); font-weight: 600; white-space: nowrap; }
+  .scheduleBlock.free .label{ color: #a89f8c; font-style: italic; }
+  .scheduleBlock.free .time{ color: #a89f8c; font-weight: 400; }
+
+  .progressPanel{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 26px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .progressPanel h3{
+    font-size: 15px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color: var(--sage-dark);
+    margin: 0 0 10px;
+  }
+  .progressBar{
+    display:flex;
+    height: 14px;
+    border-radius: 7px;
+    overflow:hidden;
+    background: #EFEBE0;
+    margin-bottom: 8px;
+  }
+  .progressBar .seg{
+    height:100%;
+  }
+  .progressLegend{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    font-size: 13px;
+    color: #6b6558;
+  }
+  .progressLegend .dot{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    margin-right:5px;
+  }
+
+  .reorder{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    margin-left:auto;
+  }
+  .reorder button{
+    border:none;
+    background:transparent;
+    color:#9a9484;
+    cursor:pointer;
+    font-size: 11.5px;
+    line-height:1;
+    padding:1px 4px;
+  }
+  .reorder button:hover{color:var(--sage-dark);}
+
+  .quota{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    color: var(--amber);
+    font-weight:600;
+  }
+  .locBadge{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .locBadge.home{
+    background: #EAF1E7;
+    color: var(--sage-dark);
+  }
+  .locBadge.office{
+    background: #FBF1E2;
+    color: var(--amber);
+  }
+  .card.parked{
+    opacity: 0.45;
+  }
+  .card.parked .parkedNote{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13.5px;
+    color: #a89f8c;
+    margin-top: 8px;
+  }
+  .goalsBox{
+    margin-bottom: 10px;
+  }
+  .goalItem{
+    margin-bottom: 6px;
+    padding: 4px 0 5px 8px;
+    border-bottom: 1px dashed var(--line);
+    border-left: 3px solid #D3D1C7;
+  }
+  .goalItem.status-completed{ border-left-color: #639922; }
+  .goalItem.status-postponed{ border-left-color: #EF9F27; }
+  .goalItem.status-cancelled{ border-left-color: #E24B4A; }
+  .goalRow{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom: 4px;
+  }
+  .goalRow input[type=text]{
+    flex:1;
+    border:none;
+    border-bottom: 1px dashed var(--line);
+    background: transparent;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13px;
+    color: #4a453b;
+    padding: 2px 0 4px;
+    outline:none;
+  }
+  .goalRow input[type=text]:focus{border-color: var(--amber);}
+  .goalRow select{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11.5px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 2px 4px;
+    color: #6b6558;
+    background: #FAF8F3;
+  }
+  .goalRow select.urgent-select{
+    border-color: #E24B4A;
+    color: #B4231F;
+    background: #FDECEC;
+    font-weight: 600;
+  }
+  .urgentBadge{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #E24B4A;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .goalItem.category-urgent{
+    background: #FFF3F3;
+    border-radius: 8px;
+    padding: 6px 8px 5px 10px;
+  }
+  .goalRow .rm{
+    border:none;
+    background:transparent;
+    color:#c7a58a;
+    cursor:pointer;
+    font-size: 15px;
+  }
+  .scheduleRow{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    padding-left: 2px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .scheduleRow span{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    color: #a89f8c;
+  }
+  .scheduleRow input[type=date],
+  .scheduleRow input[type=time]{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11.5px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 2px 4px;
+    background: #FAF8F3;
+    color: #6b6558;
+  }
+  .dailyToggle{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    border: 1px solid var(--line);
+    background: #FAF8F3;
+    color: #6b6558;
+    padding: 2px 8px;
+    border-radius: 10px;
+    cursor:pointer;
+  }
+  .dailyToggle.active{
+    background: #E6F1FB;
+    border-color: #378ADD;
+    color: #185FA5;
+    font-weight: 600;
+  }
+  .statusRow{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    padding-left: 2px;
+    flex-wrap: wrap;
+  }
+  .statusBtn{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    border: 1px solid var(--line);
+    background: #FAF8F3;
+    color: #6b6558;
+    padding: 2px 8px;
+    border-radius: 10px;
+    cursor:pointer;
+  }
+  .statusBtn.active-completed{ background:#EAF3DE; border-color:#639922; color:#3B6D11; }
+  .statusBtn.active-postponed{ background:#FAEEDA; border-color:#EF9F27; color:#854F0B; }
+  .statusBtn.active-cancelled{ background:#FCEBEB; border-color:#E24B4A; color:#A32D2D; }
+  .addGoalBtn{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12px;
+    background: transparent;
+    border: 1px dashed var(--line);
+    color: var(--sage-dark);
+    padding: 3px 10px;
+    border-radius: 12px;
+    cursor:pointer;
+    margin-bottom: 8px;
+  }
+  .focusRow{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom: 6px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    color: var(--sage-dark);
+  }
+  .focusRow select{
+    flex:1;
+    font-size: 13px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4px 6px;
+    background: #FAF8F3;
+    color: var(--ink);
+  }
+  .suggestBtn.loading{opacity:0.6; pointer-events:none;}
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (max-width:600px){
+    .grid{grid-template-columns: 1fr;}
+  }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px 14px;
+    transition: opacity 0.4s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card.done{
+    opacity: 0.55;
+  }
+  .card .top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    flex-wrap: wrap;
+  }
+  .card svg{flex-shrink:0;}
+  .card .name{
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .card .stepwrap{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    color: var(--sage-dark);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .suggestBtn{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12px;
+    text-transform:none;
+    letter-spacing:0;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--amber);
+    padding: 2px 9px;
+    border-radius: 12px;
+    cursor:pointer;
+  }
+  .suggestBtn:hover{background:#FBF3E6;}
+  .card textarea.step{
+    width:100%;
+    border:none;
+    background: #FAF8F3;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 15.5px;
+    color: var(--ink);
+    resize:none;
+    min-height: 42px;
+    outline: none;
+    line-height:1.45;
+  }
+  .card.done textarea.step{
+    text-decoration: line-through;
+    color: #8b9a8b;
+  }
+  .card .bottom{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 10px;
+  }
+  .doneBtn{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13.5px;
+    border: 1px solid var(--sage);
+    background: transparent;
+    color: var(--sage-dark);
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor:pointer;
+  }
+  .doneBtn.active{
+    background: var(--sage);
+    color:white;
+    border-color: var(--sage);
+  }
+  .streak{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    color: #a89f8c;
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 30px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 13.5px;
+    color: #9a9484;
+    line-height:1.6;
+  }
+
+  /* ---- Park: tap-to-assign + review ---- */
+  .parkPanel{
+    margin-top: 12px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .parkPanel h4{
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sage-dark);
+    margin: 10px 0 6px;
+  }
+  .parkItem{
+    background: #FAF8F3;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .parkItem .txt{ margin-bottom: 6px; line-height: 1.45; }
+  .chipRow{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .chip{
+    font-size: 12.5px;
+    font-weight: 600;
+    border: 1.5px solid currentColor;
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 14px;
+    cursor: pointer;
+  }
+  .dump .chip{ background:#fff; padding: 4px 10px; font-size: 12.5px; border-radius: 14px; }
+  .dump .chip:hover{ background:#FAF8F3; }
+  .chip.suggested, .dump .chip.suggested{ color:#fff !important; }
+  .chip.dismiss, .dump .chip.dismiss{ color:#a89f8c; border-color:#d9d2c3; font-weight:400; }
+  .placedRow{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size: 13.5px; padding: 5px 0; border-bottom: 1px dashed var(--line);
+  }
+  .placedRow:last-child{ border-bottom:none; }
+  .placedRow .dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .placedRow .txt{ flex:1; min-width: 160px; }
+  .placedRow select{
+    font-size: 12.5px; border:1px solid var(--line); border-radius:8px; padding:3px 6px; background:#fff;
+  }
+  .parkHelp{ font-family: -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; color:#9a9484; margin-top: 6px; line-height:1.5; }
+
+  /* ---- Today's plan summary ---- */
+  .planPanel{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 26px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .planPanel h3{
+    font-size: 14.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color: var(--sage-dark);
+    margin: 0 0 10px;
+  }
+  .planRow{
+    display:flex; align-items:flex-start; gap:10px;
+    padding: 8px 0; border-bottom: 1px dashed var(--line);
+    cursor: pointer;
+  }
+  .planRow:last-child{ border-bottom:none; }
+  .planRow .proj{
+    font-size: 11.5px; font-weight:700; color:#fff;
+    padding: 2px 8px; border-radius: 10px; white-space:nowrap; margin-top:2px;
+  }
+  .planRow .what{ flex:1; font-size: 14.5px; color: var(--ink); line-height:1.45; }
+  .planRow.done .what{ text-decoration: line-through; color:#9a9484; }
+  .planRow .tick, .schedRow .tick{
+    border:1.5px solid var(--line); background:#fff; border-radius:50%;
+    width:26px; height:26px; font-size:13px; cursor:pointer; flex-shrink:0; color:#3B6D11;
+  }
+  .planRow.done .tick, .schedRow.dim .tick{ background:#EAF3DE; border-color:#639922; }
+  .stepHint{
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 11.5px; color:#9a9484; margin: 4px 0 0;
+  }
+
+  /* ---- Plan by day ---- */
+  .dayStrip{ display:flex; gap:6px; overflow-x:auto; padding:8px 4px 4px 0; margin-bottom:8px; }
+  .dayBtn{
+    position:relative; flex:0 0 auto; min-width:62px; display:flex; flex-direction:column; align-items:center;
+    border:1px solid var(--line); background:#FAF8F3; border-radius:10px; padding:6px 8px; cursor:pointer;
+    font-family: inherit; color: var(--ink);
+  }
+  .dayBtn .dl{ font-size:11.5px; color:#6b6558; }
+  .dayBtn .dd{ font-size:13.5px; font-weight:600; }
+  .dayBtn .cnt{
+    position:absolute; top:-6px; right:-4px; background:var(--sage-dark); color:#fff;
+    font-size:10.5px; font-weight:700; border-radius:9px; padding:1px 6px;
+  }
+  .dayBtn.active{ background:var(--sage-dark); border-color:var(--sage-dark); }
+  .dayBtn.active .dl, .dayBtn.active .dd{ color:#fff; }
+  .dayBtn.active .cnt{ background:#fff; color:var(--sage-dark); }
+  .dayBtn.pick{ justify-content:center; font-size:18px; }
+  .dayBtn.pick input{ width:0; height:0; opacity:0; position:absolute; }
+  .dayHeading{ font-size:15px; font-weight:600; color:var(--ink); margin: 4px 0 2px; }
+  .planSub{ font-size:12px; text-transform:uppercase; letter-spacing:0.04em; color:#8a8474; margin:12px 0 4px;
+    display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .schedRow, .rItem{ display:flex; align-items:flex-start; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line); }
+  .schedRow:last-child, .rItem:last-child{ border-bottom:none; }
+  .schedRow.dim .what{ color:#9a9484; }
+  .schedRow .when{ width:66px; flex-shrink:0; font-size:13px; font-weight:600; color:var(--sage-dark); line-height:1.3; }
+  .schedRow .what, .rItem .what{ flex:1; font-size:14.5px; line-height:1.45; color:var(--ink); }
+  .schedRow .proj, .rItem .proj{ font-size:11px; font-weight:700; color:#fff; padding:1px 7px; border-radius:9px; margin-right:4px; white-space:nowrap; }
+  .sBadge{ font-size:11px; font-weight:600; padding:1px 7px; border-radius:9px; white-space:nowrap; }
+  .sBadge.done{ background:#EAF3DE; color:#3B6D11; }
+  .sBadge.post{ background:#FAEEDA; color:#854F0B; }
+  .sBadge.canc{ background:#FCEBEB; color:#A32D2D; }
+
+  /* ---- Report ---- */
+  .rTabs{ display:flex; gap:6px; margin-bottom:8px; }
+  .rTab{ flex:1; border:1px solid var(--line); background:#FAF8F3; border-radius:10px; padding:7px 0; font-size:14px; cursor:pointer; color:var(--ink); font-family:inherit; }
+  .rTab.active{ background:var(--sage-dark); border-color:var(--sage-dark); color:#fff; font-weight:600; }
+  .rNav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-size:15px; font-weight:600; color:var(--ink); }
+  .rNav button{ border:1px solid var(--line); background:#fff; border-radius:50%; width:32px; height:32px; font-size:18px; cursor:pointer; color:var(--ink); }
+  .rNav button:disabled{ opacity:0.3; cursor:default; }
+  .rTiles{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:10px; }
+  .rTile{ background:#FAF8F3; border-radius:10px; padding:10px; }
+  .rNum{ font-size:26px; font-weight:700; color:var(--ink); line-height:1.1; }
+  .rLbl{ font-size:12.5px; color:#6b6558; margin-top:2px; display:flex; align-items:center; }
+  .rSub{ font-size:11px; color:#9a9484; margin-top:2px; }
+  .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; flex-shrink:0; }
+  .rBar{ display:flex; gap:2px; height:12px; border-radius:6px; overflow:hidden; margin-bottom:12px; }
+  .rCols{ display:flex; align-items:flex-end; gap:6px; height:110px; margin: 6px 0 4px; }
+  .rCols.month{ gap:2px; }
+  .rCol{ flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; cursor:pointer; }
+  .rStack{ width:100%; max-width:26px; height:86px; display:flex; flex-direction:column; justify-content:flex-end; gap:2px; }
+  .rStack div{ width:100%; border-radius:4px 4px 0 0; }
+  .rStack div + div{ border-radius:0; }
+  .rDay{ font-size:11px; color:#8a8474; height:16px; margin-top:4px; }
+  .rCol.today .rDay{ color:var(--sage-dark); font-weight:700; }
+  .rTable{ width:100%; border-collapse:collapse; font-size:14px; margin: 8px 0 4px; }
+  .rTable th{ text-align:left; font-size:11.5px; font-weight:600; color:#8a8474; text-transform:uppercase; padding:4px 0; border-bottom:1px solid var(--line); }
+  .rTable td{ padding:6px 0; border-bottom:1px dashed var(--line); color:var(--ink); }
+  .rTable th:not(:first-child), .rTable td:not(:first-child){ text-align:center; width:18%; }
+
+  /* ---- Tabs / focus screen ---- */
+  body{ padding-bottom: 96px; }
+  .tabView{ display:none; }
+  .tabView.active{ display:block; }
+  header.compact{ text-align:left; margin-bottom: 14px; }
+  header.compact h1{ font-size: 28px; margin: 2px 0 0; }
+  .tabTitle{ font-size: 22px; font-weight: 500; margin: 0 0 14px; color: var(--ink); }
+  .tabBar{
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    display: flex; justify-content: space-around;
+    background: #fff; border-top: 1px solid var(--line);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+  }
+  .tabBar button{
+    position: relative; flex: 1; max-width: 110px;
+    background: transparent; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 4px 0; border-radius: 12px; color: #8a8474;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .tabBar .ti{ font-size: 21px; line-height: 1; }
+  .tabBar .tl{ font-size: 12px; }
+  .tabBar button.active{ color: var(--sage-dark); background: #EEF6EF; font-weight: 700; }
+  .tBadge{
+    position: absolute; top: 0; right: 18%;
+    background: #E24B4A; color: #fff; font-size: 10.5px; font-weight: 700;
+    border-radius: 9px; padding: 0 5px; min-width: 16px; line-height: 16px; display: none;
+  }
+  .tBadge.on{ display: block; }
+
+  /* ---- Rest day ---- */
+  .restBtn{
+    width: 100%; margin-bottom: 14px; cursor: pointer;
+    background: #fff; border: 1.5px dashed #B9CBB7; color: var(--sage-dark);
+    border-radius: 14px; padding: 12px 14px; text-align: left;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px;
+  }
+  .restBtn small{ display:block; color:#8a8474; font-size: 12.5px; margin-top: 2px; }
+  .restCard{
+    background: #EEF6EF; border: 1px solid #C9DEC7; border-radius: 14px;
+    padding: 16px; margin-bottom: 14px;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif; color: #2E4A33;
+  }
+  .restCard h3{ margin: 0 0 6px; font-size: 18px; font-weight: 600; }
+  .restCard p{ margin: 4px 0; font-size: 14.5px; line-height: 1.55; }
+  .restCard ul{ margin: 8px 0; padding-left: 20px; font-size: 14.5px; line-height: 1.7; }
+  .restCard .undo{
+    margin-top: 8px; background: #fff; border: 1px solid #B9CBB7; color: var(--sage-dark);
+    border-radius: 20px; padding: 7px 14px; font-size: 13.5px; cursor: pointer;
+  }
+  .sBadge.rest{ background:#EEF6EF; color:#2E6B44; }
+  .restNote{ background:#EEF6EF; color:#2E4A33; border-radius:10px; padding:7px 10px; font-size:13px; margin-bottom:10px; }
+  .restMark{ font-size:12px; text-align:center; height:auto !important; background:none !important; }
+
+  /* ---- Trips ---- */
+  .restBtn.trip{ border-color:#B5CCF2; color:#1E5BB8; }
+  .tripList{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px 14px; margin-bottom:10px;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif; }
+  .tripRow{ display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .tripRow:last-child{ border-bottom:none; }
+  .tripWhen{ font-weight:600; color:#1E5BB8; white-space:nowrap; font-size:13px; }
+  .tripName{ flex:1; color:var(--ink); }
+  .tripDel{ border:none; background:transparent; color:#b08a6a; font-size:16px; cursor:pointer; }
+  .tripForm{ background:#fff; border:1.5px solid #B5CCF2; border-radius:14px; padding:14px; margin-bottom:14px;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif; font-size:13.5px; color:#6b6558; }
+  .tripForm label{ display:flex; flex-direction:column; gap:4px; margin-bottom:8px; }
+  .tripForm input{ border:1px solid var(--line); border-radius:8px; padding:8px; font-size:15px; font-family:inherit; color:var(--ink); }
+  .tripDates{ display:flex; gap:10px; }
+  .tripDates label{ flex:1; }
+  .tripMsg{ color:#B4231F; font-size:13px; min-height:4px; }
+  .tripBtns{ display:flex; gap:8px; margin:6px 0; }
+  .tripSave{ background:#1E5BB8; color:#fff; border:none; border-radius:20px; padding:8px 18px; font-size:14px; cursor:pointer; }
+  .tripCancel{ background:#fff; color:#6b6558; border:1px solid var(--line); border-radius:20px; padding:8px 14px; font-size:14px; cursor:pointer; }
+
+  .replanBtn{
+    flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--sage-dark);
+    border-radius:14px; padding:2px 10px; font-size:11.5px; cursor:pointer; text-transform:none; letter-spacing:0;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  .moreBtn{
+    width:100%; margin-top:8px; border:1px dashed var(--line); background:#FAF8F3; color:var(--sage-dark);
+    border-radius:12px; padding:9px 0; font-size:13.5px; cursor:pointer;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+
+  .dailyToggle.light.active{ background:#F3EBE1; border-color:#A1683A; color:#7A4E2A; }
+  .lightList{ background:#fff; border-radius:10px; padding:4px 10px; margin:6px 0 10px; }
+  .lightRow{ display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:14.5px; color:var(--ink); }
+  .lightRow:last-child{ border-bottom:none; }
+  .lightRow .what{ flex:1; }
+  .lightRow .proj{ font-size:11px; font-weight:700; color:#fff; padding:1px 7px; border-radius:9px; white-space:nowrap; }
+  .lightRow .tick{ border:1.5px solid var(--line); background:#fff; border-radius:50%; width:26px; height:26px; font-size:13px; cursor:pointer; color:#3B6D11; flex-shrink:0; }
+
+  .trackSel{
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif; font-size:12px;
+    border:1px dashed var(--line); border-radius:8px; padding:5px 6px; background:#fff; color:#8a8474; max-width:132px;
+  }
+  .trackSel.on{ border-style:solid; border-color:var(--sage); background:#EEF6EF; color:var(--sage-dark); font-weight:600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="storageWarning" style="display:none;background:#FCEBEB;border:1px solid #F09595;color:#791F1F;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;padding:10px 14px;border-radius:10px;margin-bottom:16px;line-height:1.5;"></div>
+
+  <!-- ===== TODAY (opens by default) ===== -->
+  <section class="tabView" data-tab="today">
+    <header class="compact">
+      <div class="eyebrow">One Day, One Step</div>
+      <h1 id="todayTitle">Today</h1>
+    </header>
+    <div id="restBox"></div>
+    <div id="tripBox"></div>
+    <div class="planPanel" id="planPanel"></div>
+    <footer>
+      Whatever didn't happen today isn't a failure — it's just tomorrow's step.
+    </footer>
+  </section>
+
+  <!-- ===== PARK ===== -->
+  <section class="tabView" data-tab="park">
+    <h2 class="tabTitle">🅿️ Park your thoughts</h2>
+    <div class="dump">
+      <label>Late-night wandering thoughts — park them here</label>
+      <textarea id="brainDump" placeholder="Whatever's spinning in your mind, write it here... it'll be waiting tomorrow morning."></textarea>
+      <div class="row">
+        <span class="status" id="dumpStatus"></span>
+        <button onclick="saveDump()">Park it</button>
+      </div>
+      <div class="parkHelp">Tip: one thought per line. To send a line to a project directly, start it with the name — e.g. <b>mba:</b> revise chapter 3, <b>sssn:</b> call caretaker.</div>
+      <div class="parkPanel" id="parkPanel"></div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section class="tabView" data-tab="projects">
+    <h2 class="tabTitle">🗂 Projects &amp; goals</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- ===== REPORT ===== -->
+  <section class="tabView" data-tab="report">
+    <h2 class="tabTitle">📊 How it's going</h2>
+    <div class="planPanel" id="reportPanel"></div>
+  </section>
+
+  <!-- ===== TIME & SETTINGS ===== -->
+  <section class="tabView" data-tab="settings">
+    <h2 class="tabTitle">⚙️ Time &amp; settings</h2>
+  <div class="capacity">
+    <h3>Today's Time — How Much Is Left?</h3>
+    <div class="row2">
+      <label>Wake up
+        <input type="time" id="wakeTime">
+      </label>
+      <label>Sleep time
+        <input type="time" id="sleepTime">
+      </label>
+      <label>Duty starts
+        <input type="time" id="dutyStart">
+      </label>
+      <label>Duty ends
+        <input type="time" id="dutyEnd">
+      </label>
+      <label>Kaushik's wake up
+        <input type="time" id="kaushikWake" onchange="updateKaushikSchedule()">
+      </label>
+    </div>
+    <div id="kaushikScheduleNote" style="display:none;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:12.5px;color:#F5A623;font-weight:600;margin-bottom:10px;"></div>
+    <div id="routineList"></div>
+    <div class="actions">
+      <button class="addRowBtn" onclick="addRoutineRow()">+ Add mandatory task</button>
+      <button class="addRowBtn" onclick="trackAllRoutine()">✅ Track my routine as daily goals</button>
+      <button class="addRowBtn" onclick="saveAsDefaultRoutine()">Save as my daily default</button>
+      <button class="calcBtn" onclick="calculateCapacity()">Calculate leftover time</button>
+    </div>
+    <div class="leftoverResult" id="leftoverResult" style="display:none;"></div>
+    <div class="scheduleSplit" id="scheduleSplit" style="display:none;">
+      <div class="scheduleCol">
+        <h4>🌅 Morning</h4>
+        <div id="morningSchedule"></div>
+      </div>
+      <div class="scheduleCol">
+        <h4>🌆 Evening</h4>
+        <div id="eveningSchedule"></div>
+      </div>
+    </div>
+    <span class="status" id="defaultStatus" style="font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:12.5px;color:#9a9484;"></span>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:flex-end;margin-bottom:16px;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;flex-wrap:wrap;">
+    <button id="reminderBtn" onclick="enableReminders()" style="font-size:13.5px;background:transparent;border:1px solid var(--line);color:var(--sage-dark);padding:6px 14px;border-radius:20px;cursor:pointer;">🔔 Enable reminders</button>
+    <button onclick="exportData()" style="font-size:13.5px;background:transparent;border:1px solid var(--line);color:var(--sage-dark);padding:6px 14px;border-radius:20px;cursor:pointer;">📤 Export backup</button>
+    <label style="font-size:13.5px;background:transparent;border:1px solid var(--line);color:var(--sage-dark);padding:6px 14px;border-radius:20px;cursor:pointer;">
+      📥 Import backup
+      <input type="file" accept="application/json" onchange="importData(this.files[0])" style="display:none;">
+    </label>
+  </div>
+  </section>
+</div>
+
+<nav class="tabBar" id="tabBar">
+  <button data-tab="today" onclick="showTab('today')"><span class="ti">🏠</span><span class="tl">Today</span></button>
+  <button data-tab="park" onclick="showTab('park')"><span class="ti">🅿️</span><span class="tl">Park</span><span class="tBadge" id="parkBadge"></span></button>
+  <button data-tab="projects" onclick="showTab('projects')"><span class="ti">🗂</span><span class="tl">Projects</span></button>
+  <button data-tab="report" onclick="showTab('report')"><span class="ti">📊</span><span class="tl">Report</span></button>
+  <button data-tab="settings" onclick="showTab('settings')"><span class="ti">⚙️</span><span class="tl">Time</span></button>
+</nav>
+
+<script>
+const storage = {
+  async get(key, shared){
+    shared = !!shared;
+    if (typeof window.storage !== 'undefined' && window.storage && window.storage.get){
+      try{ return await window.storage.get(key, shared); }catch(e){ return null; }
+    }
+    try{
+      const raw = localStorage.getItem((shared ? 'shared:' : '') + key);
+      return raw === null ? null : { key, value: raw, shared };
+    }catch(e){ return null; }
+  },
+  async set(key, value, shared){
+    shared = !!shared;
+    if (typeof window.storage !== 'undefined' && window.storage && window.storage.set){
+      try{ return await window.storage.set(key, value, shared); }catch(e){ return null; }
+    }
+    try{
+      localStorage.setItem((shared ? 'shared:' : '') + key, value);
+      return { key, value, shared };
+    }catch(e){ return null; }
+  },
+  async delete(key, shared){
+    shared = !!shared;
+    if (typeof window.storage !== 'undefined' && window.storage && window.storage.delete){
+      try{ return await window.storage.delete(key, shared); }catch(e){ return null; }
+    }
+    try{
+      localStorage.removeItem((shared ? 'shared:' : '') + key);
+      return { key, deleted: true, shared };
+    }catch(e){ return null; }
+  }
+};
+
+const PROJECTS = [
+  { id: 'sssn', name: 'SSSN', location: 'Office', color: '#00CFB4', bg: '#DFFBF6', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M6 18c0-5 3-9 7-9s7 4 7 9" stroke="#00CFB4" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="9" r="1.4" fill="#00CFB4"/><circle cx="17" cy="9" r="1.4" fill="#00CFB4"/><path d="M13 15v3" stroke="#00CFB4" stroke-width="1.8" stroke-linecap="round"/></svg>` },
+  { id: 'art', name: 'Art Amour', location: 'Home', color: '#FF5A1F', bg: '#FFE8DC', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="14" r="7" stroke="#FF5A1F" stroke-width="1.8"/><path d="M13 4v2M20 7l-1.5 1.5" stroke="#FF5A1F" stroke-width="1.8" stroke-linecap="round"/></svg>` },
+  { id: 'railway', name: 'Railway', location: 'Office', color: '#2E7CFF', bg: '#E1EBFF', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="6" y="8" width="14" height="9" rx="2" stroke="#2E7CFF" stroke-width="1.8"/><path d="M6 21h14M9 17v2M17 17v2" stroke="#2E7CFF" stroke-width="1.8" stroke-linecap="round"/></svg>` },
+  { id: 'kaushik', name: 'Kaushik', location: 'Home', color: '#FFB300', bg: '#FFF3D6', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="9" r="4" stroke="#FFB300" stroke-width="1.8"/><path d="M6 21c1-5 4-7 7-7s6 2 7 7" stroke="#FFB300" stroke-width="1.8" stroke-linecap="round"/></svg>` },
+  { id: 'health', name: 'My Health', location: 'Home', color: '#FF2E77', bg: '#FFE0EB', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 21s-8-5-8-10.5C5 7 7.5 5 10 6c1.5.6 2.5 2 3 3 .5-1 1.5-2.4 3-3 2.5-1 5 1 5 4.5C21 16 13 21 13 21z" stroke="#FF2E77" stroke-width="1.8" stroke-linejoin="round"/></svg>` },
+  { id: 'mba', name: 'MBA Study', location: 'Office', color: '#9A5CFF', bg: '#F0E5FF', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 6L4 10l9 4 9-4-9-4z" stroke="#9A5CFF" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 12v5c0 1.5 2.5 3 5 3s5-1.5 5-3v-5" stroke="#9A5CFF" stroke-width="1.6" stroke-linejoin="round"/></svg>` },
+  { id: 'home', name: 'Home', location: 'Home', color: '#A1683A', bg: '#F6EADF', icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 12L13 5l9 7" stroke="#A1683A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 11v9h12v-9" stroke="#A1683A" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 20v-5h4v5" stroke="#A1683A" stroke-width="1.6" stroke-linejoin="round"/></svg>` },
+];
+
+const SUGGESTIONS = {
+  sssn: [
+    'Caretaker sourcing follow-up — message one vet college or NGO',
+    'Reply to one pending boarding inquiry',
+    'Check the notice board or expense log for 5 min',
+    'Post one small update on Instagram',
+    'Cat book — write just one paragraph or one memory',
+    'Recall and note down one old rescue story',
+    'Look over one chapter outline of the cat book'
+  ],
+  art: [
+    'Swami ji painting — just pick up the brush for 15 min',
+    'Look at the reference photo and check the outline',
+    'Mix one colour and do a test stroke'
+  ],
+  railway: [
+    'Check one pending PROJECTID in IRPSM',
+    'Write a status update for one sanction file',
+    'Assign one of the 17 pending works to an executive'
+  ],
+  kaushik: [
+    'Morning schedule (8:30-9:30): try one new rhyme or picture book',
+    'Play & learning time (7-8pm): one puzzle or building blocks activity',
+    'Evening time (9-9:30pm): 10 min no-phone cuddle and talk time',
+    'Morning schedule: let him help with one simple task (folding, sorting)',
+    'Play time: draw or colour together for 15 min',
+    'Evening time: read one bedtime story before winding down'
+  ],
+  health: [
+    'Log today\'s glucose reading',
+    'Call to book a physio consult',
+    'Do 10 min of light stretching or a walk',
+    'Talk about fixing a date for the cataract surgery'
+  ],
+  mba: [
+    'Read one section of a course chapter',
+    'Watch one short lecture video',
+    'Revise notes from the last topic for 15 min',
+    'Solve a couple of practice questions'
+  ],
+  home: [
+    'Clear one shelf or drawer — just 15 min',
+    'Check the ration / grocery list and add what is missing',
+    'Pay one pending bill',
+    'One small repair — or just make the call for it',
+    'Plan tomorrow\'s meals'
+  ]
+};
+
+let state = {};
+let priorityOrder = PROJECTS.map(p => p.id);
+let routineTasks = [];
+let assignedMinutes = {};
+const CHUNK = 25; // minutes given per project per priority pass
+
+const GOAL_CATEGORIES = {
+  current: 'Ongoing',
+  future: 'Big Future Goal',
+  urgent: 'Urgent'
+};
+
+function addGoal(id){
+  const s = state[id];
+  s.goals.push(makeGoal());
+  saveProject(id);
+  render();
+}
+
+function removeGoal(id, idx){
+  const s = state[id];
+  const removed = s.goals.splice(idx, 1)[0];
+  if (s.stepMode !== 'manual') autoPlanProject(id, true);
+  else {
+    if (removed && removed.id === s.stepGoalId) s.stepGoalId = null;
+    s.focusIdx = s.stepGoalId ? s.goals.findIndex(g => g.id === s.stepGoalId) : null;
+  }
+  saveProject(id);
+  render();
+}
+
+// After editing a goal: if today's step comes from it, refresh the step text;
+// if today's step is only a general tip, a newly usable goal takes over.
+function afterGoalEdit(id, idx){
+  const s = state[id];
+  if (s.stepMode !== 'manual') autoPlanProject(id, true);
+  saveProject(id);
+  refreshCardStep(id);
+  renderTodayPlan();
+}
+
+function updateGoalText(id, idx, val){
+  state[id].goals[idx].text = val;
+  afterGoalEdit(id, idx);
+}
+
+function updateGoalCategory(id, idx, val){
+  state[id].goals[idx].category = val;
+  afterGoalEdit(id, idx);
+  render();
+}
+
+function updateGoalDate(id, idx, val){
+  state[id].goals[idx].date = val;
+  afterGoalEdit(id, idx);
+}
+
+function updateGoalStart(id, idx, val){
+  state[id].goals[idx].startTime = val;
+  afterGoalEdit(id, idx);
+}
+
+function updateGoalEnd(id, idx, val){
+  state[id].goals[idx].endTime = val;
+  afterGoalEdit(id, idx);
+}
+
+function setFocus(id, val){
+  const s = state[id];
+  if (val === ''){
+    autoPlanProject(id, true);
+  } else {
+    const g = s.goals[Number(val)];
+    s.focusIdx = Number(val);
+    if (g){
+      s.stepGoalId = g.id;
+      s.step = g.text ? stepTextFor(g) : s.step;
+      s.stepMode = 'auto';
+      s.planDate = todayStr();
+    }
+  }
+  saveProject(id);
+  render();
+}
+
+function setGoalStatus(id, idx, status){
+  const s = state[id];
+  const g = s.goals[idx];
+  const t = todayStr();
+  if (g.isDaily){
+    if (!g.statusByDate) g.statusByDate = {};
+    g.statusByDate[t] = (g.statusByDate[t] === status) ? 'pending' : status;
+  } else {
+    g.status = (g.status === status) ? 'pending' : status;
+    if (g.status === 'postponed') g.postponedOn = t; else delete g.postponedOn;
+    // Remember on which day it was done / skipped — the report reads this
+    if (!g.log) g.log = {};
+    if (g.status === 'pending') delete g.log[t]; else g.log[t] = g.status;
+  }
+  // Today's step is auto → re-pick, so a Done/Postponed/Cancelled goal hands over to the next one
+  if (s.stepMode !== 'manual') autoPlanProject(id, true);
+  saveProject(id);
+  render();
+}
+
+function refreshCardStep(id){
+  const card = document.querySelector(`.card[data-pid="${id}"]`);
+  if (!card) return;
+  const ta = card.querySelector('textarea.step');
+  if (ta && document.activeElement !== ta) ta.value = state[id].step || '';
+  const hint = card.querySelector('.stepHint');
+  if (hint) hint.textContent = stepHintFor(id);
+  renderFocusSelect(id);
+}
+
+function stepHintFor(id){
+  const s = state[id];
+  if (s.stepMode === 'manual') return 'Your own step for today — it stays until tomorrow.';
+  if (s.stepGoalId) return 'Auto-picked from your goals · changes by itself when you mark it Done / Postponed.';
+  const hasGoals = (s.goals || []).some(g => g && g.text && g.text.trim());
+  return hasGoals ? '' : 'General idea — add a goal and the app will pick from it every day.';
+}
+
+function toggleDaily(id, idx){
+  const g = state[id].goals[idx];
+  g.isDaily = !g.isDaily;
+  if (g.isDaily && !g.statusByDate) g.statusByDate = {};
+  saveProject(id);
+  render();
+}
+
+function renderGoalsForProject(id){
+  const s = state[id];
+  const box = document.getElementById('goalsBox-' + id);
+  if (!box) return;
+  box.innerHTML = '';
+  const t = todayStr();
+  s.goals.forEach((g, idx) => {
+    if (g.date === undefined) g.date = '';
+    if (g.startTime === undefined) g.startTime = '';
+    if (g.endTime === undefined) g.endTime = '';
+    if (g.status === undefined) g.status = 'pending';
+    if (g.isDaily === undefined) g.isDaily = false;
+    if (g.statusByDate === undefined) g.statusByDate = {};
+    const effectiveStatus = g.isDaily ? (g.statusByDate[t] || 'pending') : g.status;
+    const isUrgent = g.category === 'urgent';
+    const item = document.createElement('div');
+    item.className = 'goalItem' + (effectiveStatus !== 'pending' ? ' status-' + effectiveStatus : '') + (isUrgent ? ' category-urgent' : '');
+    item.innerHTML = `
+      <div class="goalRow">
+        ${isUrgent ? '<span class="urgentBadge">🔴 URGENT</span>' : ''}
+        <input type="text" placeholder="write the goal..." value="${esc(g.text)}">
+        <select class="${isUrgent ? 'urgent-select' : ''}">
+          <option value="current" ${g.category === 'current' ? 'selected' : ''}>Ongoing</option>
+          <option value="urgent" ${g.category === 'urgent' ? 'selected' : ''}>Urgent</option>
+          <option value="future" ${g.category === 'future' ? 'selected' : ''}>Future Goal</option>
+        </select>
+        <button class="rm" onclick="removeGoal('${id}', ${idx})">✕</button>
+      </div>
+      <div class="scheduleRow">
+        <button class="dailyToggle ${g.isDaily ? 'active' : ''}" onclick="toggleDaily('${id}', ${idx})">🔁 Daily</button>
+        <button class="dailyToggle light ${isLightGoal(g) ? 'active' : ''}" onclick="toggleLight('${id}', ${idx})" title="Can be done sitting down — stays on rest days">🪑 ${g.light === false ? 'Not sitting' : 'Sitting'}</button>
+        ${g.isDaily ? '' : `<span>Date:</span><input type="date" value="${g.date}">`}
+        <input type="time" value="${g.startTime}">
+        <span>-</span>
+        <input type="time" value="${g.endTime}">
+      </div>
+      <div class="statusRow">
+        <button class="statusBtn ${effectiveStatus === 'completed' ? 'active-completed' : ''}" onclick="setGoalStatus('${id}', ${idx}, 'completed')">✓ Done</button>
+        <button class="statusBtn ${effectiveStatus === 'postponed' ? 'active-postponed' : ''}" onclick="setGoalStatus('${id}', ${idx}, 'postponed')">⏸ Postponed</button>
+        <button class="statusBtn ${effectiveStatus === 'cancelled' ? 'active-cancelled' : ''}" onclick="setGoalStatus('${id}', ${idx}, 'cancelled')">✕ Cancelled</button>
+      </div>
+    `;
+    item.querySelector('.goalRow input[type=text]').addEventListener('input', e => updateGoalText(id, idx, e.target.value));
+    item.querySelector('.goalRow select').addEventListener('change', e => updateGoalCategory(id, idx, e.target.value));
+    if (!g.isDaily){
+      const dateInput = item.querySelector('.scheduleRow input[type=date]');
+      if (dateInput) dateInput.addEventListener('input', e => updateGoalDate(id, idx, e.target.value));
+    }
+    const timeInputs = item.querySelectorAll('.scheduleRow input[type=time]');
+    timeInputs[0].addEventListener('input', e => updateGoalStart(id, idx, e.target.value));
+    timeInputs[1].addEventListener('input', e => updateGoalEnd(id, idx, e.target.value));
+    box.appendChild(item);
+  });
+
+  renderFocusSelect(id);
+}
+
+function renderFocusSelect(id){
+  const s = state[id];
+  const focusSelect = document.getElementById('focus-' + id);
+  if (!focusSelect) return;
+  focusSelect.innerHTML = '<option value="">✨ Auto — best goal for today</option>' +
+    s.goals.map((g, idx) => {
+      const when = g.isDaily ? ' (🔁 Daily)' : (g.date ? ` (${prettyDate(g.date)}${g.startTime ? ' ' + g.startTime : ''})` : '');
+      const label = g.text ? (g.text.length > 34 ? g.text.slice(0, 34) + '…' : g.text) : '(unnamed)';
+      return `<option value="${idx}" ${s.focusIdx === idx ? 'selected' : ''}>[${GOAL_CATEGORIES[g.category] || 'Ongoing'}] ${esc(label)}${when}</option>`;
+    }).join('');
+}
+
+function addRoutineRow(name = '', minutes = '', time = '', goalRef = null){
+  routineTasks.push({ name, minutes, time, goalRef });
+  renderRoutineList();
+}
+
+function removeRoutineRow(idx){
+  routineTasks.splice(idx, 1);
+  renderRoutineList();
+  calculateCapacity(true);
+}
+
+function moveRoutineTask(idx, dir){
+  const j = idx + dir;
+  if (j < 0 || j >= routineTasks.length) return;
+  [routineTasks[idx], routineTasks[j]] = [routineTasks[j], routineTasks[idx]];
+  renderRoutineList();
+  calculateCapacity(true);
+}
+
+function renderRoutineList(){
+  const list = document.getElementById('routineList');
+  list.innerHTML = '';
+  routineTasks.forEach((t, idx) => {
+    if (!t) return;
+    const row = document.createElement('div');
+    row.className = 'routineRow';
+    row.innerHTML = `
+      <div class="reorder">
+        <button onclick="moveRoutineTask(${idx}, -1)" title="Move up">▲</button>
+        <button onclick="moveRoutineTask(${idx}, 1)" title="Move down">▼</button>
+      </div>
+      <input type="text" placeholder="e.g. Kaushik's time, cooking, commute" value="${t.name || ''}">
+      <input type="number" placeholder="min" value="${t.minutes || ''}">
+      <input type="time" title="Fixed clock time (optional)" value="${t.time || ''}">
+      <select class="trackSel${t.goalRef ? ' on' : ''}" title="Track this as a daily goal you can tick off"
+        onchange="linkRoutineTask(${idx}, this.value)">
+        <option value="">＋ Track as goal…</option>
+        ${PROJECTS.map(p => `<option value="${p.id}" ${t.goalRef && t.goalRef.pid === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
+      </select>
+      <button onclick="removeRoutineRow(${idx})">✕</button>
+    `;
+    const [txt, num, timeInput] = row.querySelectorAll('input');
+    txt.addEventListener('change', e => { routineTasks[idx].name = e.target.value; syncRoutineGoal(idx); calculateCapacity(true); });
+    num.addEventListener('change', e => { routineTasks[idx].minutes = e.target.value; calculateCapacity(true); });
+    timeInput.addEventListener('change', e => { routineTasks[idx].time = e.target.value; syncRoutineGoal(idx); calculateCapacity(true); });
+    list.appendChild(row);
+  });
+}
+
+// ---------- Routine rows ↔ daily goals ----------
+// A routine row is only time-planning. Tracking it creates a 🔁 Daily goal in a project,
+// so it shows up in Today / Projects and can be ticked off and counted in the report.
+const ROUTINE_PROJECT_HINTS = [
+  [['meditation', 'yoga', 'breathing', 'pranayam', 'walk', 'exercise', 'stretch', 'glucose', 'medicine'], 'health'],
+  [['kaushik'], 'kaushik'],
+  [['dinner', 'cooking', 'khana', 'kitchen', 'grocery', 'cleaning', 'laundry', 'home'], 'home'],
+  [['study', 'mba', 'padhai', 'revision'], 'mba'],
+  [['painting', 'art', 'sketch', 'draw'], 'art'],
+  [['cat', 'sssn', 'caretaker', 'boarding'], 'sssn']
+];
+
+function guessRoutineProject(name){
+  const lower = (name || '').toLowerCase();
+  for (const [words, pid] of ROUTINE_PROJECT_HINTS){
+    if (words.some(w => lower.includes(w))) return pid;
+  }
+  return '';
+}
+
+function linkRoutineTask(idx, pid){
+  const t = routineTasks[idx];
+  if (!t) return;
+  if (t.goalRef){ // remove the previous linked goal
+    const st = state[t.goalRef.pid];
+    if (st){
+      const i = (st.goals || []).findIndex(g => g.id === t.goalRef.gid);
+      if (i >= 0){ st.goals.splice(i, 1); saveProject(t.goalRef.pid); autoPlanProject(t.goalRef.pid, true); }
+    }
+    t.goalRef = null;
+  }
+  if (pid && state[pid]){
+    const name = t.name || 'Routine task';
+    let g = (state[pid].goals || []).find(x => x && x.isDaily && (x.text || '').trim().toLowerCase() === name.trim().toLowerCase());
+    if (!g){
+      g = makeGoal({ text: name, isDaily: true, startTime: t.time || '' });
+      state[pid].goals.push(g);
+    } else {
+      g.startTime = t.time || g.startTime;
+    }
+    t.goalRef = { pid, gid: g.id };
+    saveProject(pid);
+    autoPlanProject(pid, true);
+  }
+  saveCapacityState();
+  renderRoutineList();
+  render();
+}
+
+function syncRoutineGoal(idx){
+  const t = routineTasks[idx];
+  if (!t || !t.goalRef) return;
+  const st = state[t.goalRef.pid];
+  if (!st) return;
+  const g = (st.goals || []).find(x => x.id === t.goalRef.gid);
+  if (!g) return;
+  g.text = t.name || g.text;
+  g.startTime = t.time || '';
+  saveProject(t.goalRef.pid);
+  render();
+}
+
+// One tap: track every routine row the app can place by itself
+function trackAllRoutine(){
+  let n = 0;
+  routineTasks.forEach((t, i) => {
+    if (!t || t.goalRef || !t.name) return;
+    const pid = guessRoutineProject(t.name);
+    if (pid){ linkRoutineTask(i, pid); n++; }
+  });
+  const statusEl = document.getElementById('defaultStatus');
+  if (statusEl){
+    statusEl.textContent = n ? `${n} routine task${n > 1 ? 's' : ''} now tracked as daily goals ✓` : 'Nothing new to track — pick a project next to a row.';
+    setTimeout(() => statusEl.textContent = '', 4000);
+  }
+}
+
+function movePriority(id, dir){
+  const i = priorityOrder.indexOf(id);
+  const j = i + dir;
+  if (j < 0 || j >= priorityOrder.length) return;
+  [priorityOrder[i], priorityOrder[j]] = [priorityOrder[j], priorityOrder[i]];
+  saveCapacityState();
+  calculateCapacity(true);
+}
+
+function timeToMinutes(t){
+  if (!t) return null;
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function minutesToTime12(mins){
+  mins = ((mins % 1440) + 1440) % 1440;
+  let h = Math.floor(mins / 60);
+  const m = mins % 60;
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12;
+  if (h === 0) h = 12;
+  return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+function updateKaushikSchedule(){
+  const kWake = timeToMinutes(document.getElementById('kaushikWake').value);
+  const note = document.getElementById('kaushikScheduleNote');
+  if (kWake === null){
+    note.style.display = 'none';
+    saveCapacityState();
+    return;
+  }
+  const kEnd = kWake + 60; // morning schedule duration
+  note.style.display = 'block';
+  note.textContent = `👶 Kaushik's morning schedule (based on wake-up): ${minutesToTime12(kWake)} - ${minutesToTime12(kEnd)}`;
+  saveCapacityState();
+}
+
+function findTaskMinutes(patterns){
+  const task = routineTasks.find(r => r && r.name && patterns.every(p => r.name.toLowerCase().includes(p)));
+  return task ? Number(task.minutes || 0) : 0;
+}
+
+function findTaskTime(patterns){
+  const task = routineTasks.find(r => r && r.name && patterns.every(p => r.name.toLowerCase().includes(p)));
+  return task && task.time ? timeToMinutes(task.time) : null;
+}
+
+function renderMorningEveningSchedule(){
+  const wakeM = timeToMinutes(document.getElementById('wakeTime').value);
+  const kaushikWakeM = timeToMinutes(document.getElementById('kaushikWake').value);
+  const dutyStartM = timeToMinutes(document.getElementById('dutyStart').value);
+  const dutyEndM = timeToMinutes(document.getElementById('dutyEnd').value);
+  const sleepM = timeToMinutes(document.getElementById('sleepTime').value);
+
+  const travelTotal = findTaskMinutes(['travel']);
+  const halfTravel = Math.round(travelTotal / 2);
+
+  const morningRaw = [];
+  const eveningRaw = [];
+  const droppedKnown = [];
+
+  const MORNING_PATTERNS = [['breathing'], ['yoga'], ['meditation'], ['kaushik','morning']];
+  const EVENING_PATTERNS = [['homework'], ['dinner'], ['kaushik','evening']];
+  const classify = (name) => {
+    const lower = (name || '').toLowerCase();
+    if (lower.includes('travel')) return 'travel';
+    if (MORNING_PATTERNS.some(p => p.every(k => lower.includes(k)))) return 'morning';
+    if (EVENING_PATTERNS.some(p => p.every(k => lower.includes(k)))) return 'evening';
+    return null;
+  };
+
+  if (wakeM !== null) morningRaw.push({ label: 'Wake up', start: wakeM, end: wakeM, marker: true });
+  if (dutyEndM !== null) eveningRaw.push({ label: 'Duty ends', start: dutyEndM, end: dutyEndM, marker: true });
+  if (dutyEndM !== null && travelTotal > 0){
+    eveningRaw.push({ label: 'Travel back', start: dutyEndM, end: dutyEndM + halfTravel });
+  }
+
+  // Walk routineTasks in the person's own chosen order (reorderable via the ▲▼ arrows).
+  // A task's own fixed time always wins; tasks left without a time chain sequentially,
+  // in this order, after the previous task in their half of the day.
+  let morningCursor = wakeM;
+  let eveningCursor = dutyEndM !== null ? dutyEndM + halfTravel : null;
+  const kaushikMorningFallback = kaushikWakeM;
+
+  routineTasks.forEach(t => {
+    if (!t || !t.name) return;
+    const cls = classify(t.name);
+    if (cls !== 'morning' && cls !== 'evening') return;
+    const mins = Number(t.minutes || 0);
+    if (mins <= 0) return;
+    const fixedM = t.time ? timeToMinutes(t.time) : null;
+
+    if (cls === 'morning'){
+      const isKaushikMorning = t.name.toLowerCase().includes('kaushik');
+      const fallback = (fixedM === null && isKaushikMorning && morningCursor === null) ? kaushikMorningFallback : morningCursor;
+      const start = fixedM !== null ? fixedM : fallback;
+      if (start === null || start === undefined){ droppedKnown.push(t.name); return; }
+      morningRaw.push({ label: t.name, start, end: start + mins });
+      morningCursor = start + mins;
+    } else {
+      const start = fixedM !== null ? fixedM : eveningCursor;
+      if (start === null || start === undefined){ droppedKnown.push(t.name); return; }
+      eveningRaw.push({ label: t.name, start, end: start + mins });
+      eveningCursor = start + mins;
+    }
+  });
+
+  if (dutyStartM !== null && travelTotal > 0){
+    morningRaw.push({ label: 'Travel to duty', start: dutyStartM - halfTravel, end: dutyStartM });
+  }
+  if (dutyStartM !== null) morningRaw.push({ label: 'Duty starts', start: dutyStartM, end: dutyStartM, marker: true });
+  if (sleepM !== null) eveningRaw.push({ label: 'Sleep', start: sleepM, end: sleepM, marker: true });
+
+  // Step 2: sort chronologically, then walk through inserting "Free time" wherever
+  // there's a genuine gap between the end of one block and the start of the next.
+  const finalizeSchedule = (raw) => {
+    raw.sort((a, b) => a.start - b.start);
+    const out = [];
+    let cursor = null;
+    raw.forEach(b => {
+      if (cursor !== null && b.start > cursor){
+        out.push({ label: 'Free time', start: cursor, end: b.start, free: true });
+      }
+      out.push(b);
+      cursor = cursor === null ? b.end : Math.max(cursor, b.end);
+    });
+    return out;
+  };
+
+  const KNOWN_PATTERNS = [['travel'], ['kaushik','morning'], ['homework'], ['dinner'], ['kaushik','evening'], ['meditation'], ['yoga'], ['breathing']];
+  const isKnownTask = (name) => {
+    const lower = (name || '').toLowerCase();
+    return KNOWN_PATTERNS.some(patterns => patterns.every(p => lower.includes(p)));
+  };
+
+  // Any other custom task the person added — if it has a fixed time, place it directly on the timeline.
+  const unscheduledCustom = [];
+  routineTasks.forEach(t => {
+    if (!t || !t.name || isKnownTask(t.name)) return;
+    const mins = Number(t.minutes || 0);
+    if (mins <= 0) return;
+    const fixedM = t.time ? timeToMinutes(t.time) : null;
+    if (fixedM !== null){
+      const block = { label: t.name, start: fixedM, end: fixedM + mins };
+      if (fixedM < 720) morningRaw.push(block);
+      else eveningRaw.push(block);
+    } else {
+      unscheduledCustom.push(t.name);
+    }
+  });
+
+  const morningBlocks = finalizeSchedule(morningRaw);
+  const eveningBlocks = finalizeSchedule(eveningRaw);
+  const allUnscheduled = [...unscheduledCustom, ...droppedKnown];
+
+  const renderCol = (elId, blocks, showUnscheduled) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    if (blocks.length === 0){
+      el.innerHTML = '<div class="scheduleBlock"><span class="label">Fill in the times above</span></div>';
+    } else {
+      el.innerHTML = blocks.map(b => `
+        <div class="scheduleBlock${b.free ? ' free' : ''}">
+          <span class="label">${b.label}</span>
+          <span class="time">${b.marker ? minutesToTime12(b.start) : `${minutesToTime12(b.start)} – ${minutesToTime12(b.end)}`}</span>
+        </div>
+      `).join('');
+    }
+    if (showUnscheduled && allUnscheduled.length){
+      el.innerHTML += `<div class="scheduleBlock free"><span class="label">${allUnscheduled.join(', ')} — add a time above to place ${allUnscheduled.length > 1 ? 'these' : 'it'} here</span></div>`;
+    }
+  };
+
+  renderCol('morningSchedule', morningBlocks, false);
+  renderCol('eveningSchedule', eveningBlocks, true);
+  document.getElementById('scheduleSplit').style.display = 'flex';
+}
+
+function calculateCapacity(silent){
+  const dStart = timeToMinutes(document.getElementById('dutyStart').value);
+  const dEnd = timeToMinutes(document.getElementById('dutyEnd').value);
+  let dutyMinutes = 0;
+  if (dStart !== null && dEnd !== null){
+    dutyMinutes = dEnd > dStart ? (dEnd - dStart) : (1440 - dStart + dEnd);
+  }
+  const routineMinutes = routineTasks
+    .filter(r => r && r.minutes)
+    .reduce((sum, r) => sum + Number(r.minutes || 0), 0);
+
+  const wakeM = timeToMinutes(document.getElementById('wakeTime').value);
+  const sleepM = timeToMinutes(document.getElementById('sleepTime').value);
+  let sleepBuffer = 420; // fallback ~7 hrs if wake/sleep not set
+  if (wakeM !== null && sleepM !== null){
+    sleepBuffer = wakeM > sleepM ? (1440 - sleepM + wakeM) : (wakeM - sleepM + 1440) % 1440;
+    if (sleepBuffer === 0) sleepBuffer = 1440;
+  }
+  let leftover = 1440 - dutyMinutes - routineMinutes - sleepBuffer;
+  if (leftover < 0) leftover = 0;
+
+  assignedMinutes = {};
+  let remaining = leftover;
+  priorityOrder.forEach(id => {
+    if (remaining >= CHUNK){
+      assignedMinutes[id] = CHUNK;
+      remaining -= CHUNK;
+    } else if (remaining > 0){
+      assignedMinutes[id] = remaining;
+      remaining = 0;
+    } else {
+      assignedMinutes[id] = 0;
+    }
+  });
+
+  const resultEl = document.getElementById('leftoverResult');
+  const sleepHrs = Math.floor(sleepBuffer / 60);
+  const sleepMins = sleepBuffer % 60;
+  const hrs = Math.floor(leftover / 60);
+  const mins = leftover % 60;
+  const activeCount = Object.values(assignedMinutes).filter(m => m > 0).length;
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `Today's leftover time: <b>${hrs} hr ${mins} min</b> (after setting aside <b>${sleepHrs} hr ${sleepMins} min</b> for sleep). This means <b>${activeCount}</b> project${activeCount !== 1 ? 's' : ''} can be active today, by priority — the rest are parked for tomorrow.`;
+
+  saveCapacityState();
+  renderMorningEveningSchedule();
+  render();
+  if (!silent) {} 
+}
+
+async function saveCapacityState(){
+  try{
+    await storage.set('daycapacity', JSON.stringify({
+      wakeTime: document.getElementById('wakeTime').value,
+      sleepTime: document.getElementById('sleepTime').value,
+      dutyStart: document.getElementById('dutyStart').value,
+      dutyEnd: document.getElementById('dutyEnd').value,
+      kaushikWake: document.getElementById('kaushikWake').value,
+      routineTasks,
+      priorityOrder,
+      date: todayStr()
+    }), false);
+  }catch(e){ console.error(e); }
+}
+
+function todayStr(){
+  // Local date (India time), not UTC — UTC would still say "yesterday" before 5:30 AM IST
+  return fmtDate(new Date());
+}
+
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function newGoalId(){
+  return 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function makeGoal(fields){
+  return Object.assign({
+    id: newGoalId(), text: '', category: 'current', date: '', startTime: '', endTime: '',
+    status: 'pending', isDaily: false, statusByDate: {}, log: {}, createdOn: todayStr(), light: null
+  }, fields || {});
+}
+
+// Tasks you can do sitting down — these stay visible on a rest day.
+// Auto-detected from the wording; the 🪑 button on a goal overrides it either way.
+const LIGHT_WORDS = /\b(call|phone|ring|book|booking|appointment|message|msg|whatsapp|email|mail|reply|order|online|form|apply|pay|payment|bill|recharge|transfer|confirm|cancel|schedule|send|share|check|read|list|plan|note|search|watch|lecture|video|photo|upload|download)\b/i;
+
+function isLightGoal(g){
+  if (!g) return false;
+  if (g.light === true) return true;
+  if (g.light === false) return false;
+  return LIGHT_WORDS.test(g.text || '');
+}
+
+function toggleLight(id, idx){
+  const g = state[id].goals[idx];
+  // cycles: auto → sitting task → not a sitting task → auto
+  g.light = g.light === null || g.light === undefined ? true : (g.light === true ? false : null);
+  saveProject(id);
+  render();
+}
+
+function goalStatusToday(g){
+  return statusOnDate(g, todayStr());
+}
+
+function prettyDate(d){
+  if (!d) return '';
+  const [y, m, day] = d.split('-').map(Number);
+  const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1] || '';
+  return `${day} ${mon}${y !== new Date().getFullYear() ? ' ' + y : ''}`;
+}
+
+function daysUntil(d){
+  const [y, m, day] = d.split('-').map(Number);
+  const target = new Date(y, m - 1, day);
+  const now = new Date(); now.setHours(0,0,0,0);
+  return Math.round((target - now) / 86400000);
+}
+
+// ---------- Daily auto-plan: picks each project's step from its own goals ----------
+
+function pickTodaysGoal(s){
+  const t = todayStr();
+  let best = null, bestScore = -Infinity;
+  (s.goals || []).forEach((g, idx) => {
+    if (!g || !g.text || !g.text.trim()) return;
+    if (goalStatusToday(g) !== 'pending') return;
+    if (isOffDay(t) && g.category !== 'urgent' && !(isRestDay(t) && isLightGoal(g))) return; // rest day keeps sitting tasks; a trip keeps only urgent
+    const isToday = g.isDaily || g.date === t;
+    const overdue = !g.isDaily && g.date && g.date < t;
+    const futureDated = !g.isDaily && g.date && g.date > t;
+    let score;
+    if (isToday) score = 500;
+    else if (overdue) score = 400;
+    else if (g.category === 'urgent' && !futureDated) score = 300;
+    else if (!futureDated && g.category === 'current') score = 200;
+    else if (!futureDated) score = 100;
+    else score = 90 - Math.min(daysUntil(g.date), 80);
+    if (g.category === 'urgent') score += 30;
+    if (isToday && g.startTime) score += (1440 - timeToMinutes(g.startTime)) / 100; // earlier first
+    if (score > bestScore){ bestScore = score; best = { g, idx }; }
+  });
+  return best;
+}
+
+function stepTextFor(g){
+  const t = todayStr();
+  const time = g.startTime
+    ? `⏰ ${minutesToTime12(timeToMinutes(g.startTime))}${g.endTime ? '–' + minutesToTime12(timeToMinutes(g.endTime)) : ''} · `
+    : '';
+  if (!g.isDaily && g.date && g.date < t) return `⚠️ Overdue since ${prettyDate(g.date)}: ${g.text}`;
+  if (g.isDaily || g.date === t) return `${time}${g.text}`;
+  if (g.category === 'urgent') return `🔴 ${g.text}`;
+  if (g.date && g.date > t && g.category !== 'future' && daysUntil(g.date) <= 7){
+    const d = daysUntil(g.date);
+    return `📅 ${d === 1 ? 'Tomorrow' : prettyDate(g.date)}${g.startTime ? ' ' + minutesToTime12(timeToMinutes(g.startTime)) : ''} → get ready: ${g.text}`;
+  }
+  if (g.category === 'future' || (g.date && g.date > t)){
+    return `Small start (15 min) → ${g.text}${g.date ? ' · due ' + prettyDate(g.date) : ''}`;
+  }
+  return `Next step → ${g.text}`;
+}
+
+// force = re-pick even if today's step already exists
+function autoPlanProject(id, force){
+  const s = state[id];
+  if (!s) return;
+  const t = todayStr();
+  const stale = s.planDate !== t;
+
+  if (!force && !stale){
+    if (s.stepMode === 'manual') return;
+    const cur = s.stepGoalId ? (s.goals || []).find(g => g.id === s.stepGoalId) : null;
+    if (cur && goalStatusToday(cur) === 'pending' && cur.text){
+      s.focusIdx = s.goals.indexOf(cur);
+      return; // keep today's pick
+    }
+  }
+
+  const pick = pickTodaysGoal(s);
+  if (pick){
+    s.focusIdx = pick.idx;
+    s.stepGoalId = pick.g.id;
+    s.step = stepTextFor(pick.g);
+  } else {
+    const hasGoals = (s.goals || []).some(g => g && g.text && g.text.trim());
+    const pool = SUGGESTIONS[id] || [];
+    if (tripOn(t)){
+      s.step = `✈️ Away (${tripOn(t).label}) — this waits till you're back.`;
+    } else if (isRestDay(t)){
+      s.step = '🌿 Rest day — this can wait till tomorrow.';
+    } else if (hasGoals){
+      s.step = '🎉 All goals here are done or paused for today. Rest, or add a new goal.';
+    } else if (stale || !s.step || s.stepGoalId){
+      if (pool.length){
+        s.step = pool[(s.sugIdx || 0) % pool.length];
+        s.sugIdx = ((s.sugIdx || 0) + 1) % pool.length;
+      }
+    }
+    s.stepGoalId = null;
+    s.focusIdx = null;
+  }
+  s.planDate = t;
+  s.stepMode = 'auto';
+  saveProject(id);
+}
+
+function autoPlanAll(force){
+  PROJECTS.forEach(p => autoPlanProject(p.id, force));
+}
+
+// A postponed one-off goal comes back the next day (moved to that day) instead of vanishing
+function carryOverPostponed(){
+  const t = todayStr();
+  PROJECTS.forEach(p => {
+    const s = state[p.id];
+    let changed = false;
+    (s.goals || []).forEach(g => {
+      if (!g.isDaily && g.status === 'postponed' && g.postponedOn && g.postponedOn < t){
+        g.status = 'pending';
+        g.date = t;
+        delete g.postponedOn;
+        changed = true;
+      }
+    });
+    if (changed) saveProject(p.id);
+  });
+}
+
+const DEFAULT_ROUTINE = {
+  wakeTime: '06:00',
+  sleepTime: '22:30',
+  dutyStart: '10:00',
+  dutyEnd: '17:30',
+  kaushikWake: '08:30',
+  routineTasks: [
+    { name: 'Travel (to & fro)', minutes: 50, time: '' },
+    { name: "Kaushik's morning schedule", minutes: 60, time: '' },
+    { name: "Kaushik's homework & play time", minutes: 60, time: '19:00' },
+    { name: 'Dinner', minutes: 60, time: '20:00' },
+    { name: 'Time with Kaushik (evening)', minutes: 90, time: '21:00' },
+    { name: 'Meditation', minutes: 20, time: '' },
+    { name: 'Yoga', minutes: 30, time: '' },
+    { name: 'Breathing exercise', minutes: 10, time: '' }
+  ]
+};
+
+async function loadState(){
+  for (const p of PROJECTS){
+    try{
+      const res = await storage.get('project:' + p.id, false);
+      state[p.id] = res ? JSON.parse(res.value) : { step: '', lastDone: '', streak: 0, sugIdx: 0, goals: [], focusIdx: null };
+      if (state[p.id].sugIdx === undefined) state[p.id].sugIdx = 0;
+      if (state[p.id].goals === undefined) state[p.id].goals = [];
+      if (state[p.id].focusIdx === undefined) state[p.id].focusIdx = null;
+    }catch(e){
+      state[p.id] = { step: '', lastDone: '', streak: 0, sugIdx: 0, goals: [], focusIdx: null };
+    }
+  }
+  try{
+    const dumpRes = await storage.get('braindump', false);
+    if (dumpRes) document.getElementById('brainDump').value = dumpRes.value;
+  }catch(e){}
+  try{
+    const unsureRes = await storage.get('unsureThoughts', false);
+    if (unsureRes) unsureThoughts = JSON.parse(unsureRes.value) || [];
+  }catch(e){ unsureThoughts = []; }
+
+  // Older saved goals had no id — give them one so today's step can track them
+  for (const p of PROJECTS){
+    let changed = false;
+    (state[p.id].goals || []).forEach(g => { if (g && !g.id){ g.id = newGoalId(); changed = true; } });
+    if (changed) saveProject(p.id);
+  }
+
+  try{
+    const tripRes = await storage.get('trips', false);
+    if (tripRes) trips = JSON.parse(tripRes.value) || [];
+  }catch(e){ trips = []; }
+  try{
+    const restRes = await storage.get('restDays', false);
+    if (restRes) restDays = JSON.parse(restRes.value) || {};
+  }catch(e){ restDays = {}; }
+
+  carryOverPostponed();
+  autoPlanAll(false);
+
+  let loadedFromToday = false;
+  try{
+    const capRes = await storage.get('daycapacity', false);
+    if (capRes){
+      const cap = JSON.parse(capRes.value);
+      if (cap.date === todayStr()){
+        document.getElementById('wakeTime').value = cap.wakeTime || '';
+        document.getElementById('sleepTime').value = cap.sleepTime || '';
+        document.getElementById('dutyStart').value = cap.dutyStart || '';
+        document.getElementById('dutyEnd').value = cap.dutyEnd || '';
+        document.getElementById('kaushikWake').value = cap.kaushikWake || '';
+        (cap.routineTasks || []).forEach(r => { if (r) addRoutineRow(r.name, r.minutes, r.time, r.goalRef || null); });
+        if (cap.priorityOrder) priorityOrder = cap.priorityOrder;
+        loadedFromToday = true;
+      }
+    }
+  }catch(e){}
+
+  if (!loadedFromToday){
+    let template = DEFAULT_ROUTINE;
+    try{
+      const defRes = await storage.get('defaultRoutine', false);
+      if (defRes) template = JSON.parse(defRes.value);
+    }catch(e){}
+    document.getElementById('wakeTime').value = template.wakeTime || '';
+    document.getElementById('sleepTime').value = template.sleepTime || '';
+    document.getElementById('dutyStart').value = template.dutyStart || '';
+    document.getElementById('dutyEnd').value = template.dutyEnd || '';
+    document.getElementById('kaushikWake').value = template.kaushikWake || '';
+    (template.routineTasks || []).forEach(r => { if (r) addRoutineRow(r.name, r.minutes, r.time, r.goalRef || null); });
+    if (template.priorityOrder) priorityOrder = template.priorityOrder;
+  }
+
+  // Migration safety: drop any stale ids no longer in PROJECTS (e.g. old 'book'), and add any new ones
+  const validIds = PROJECTS.map(p => p.id);
+  priorityOrder = priorityOrder.filter(id => validIds.includes(id));
+  validIds.forEach(id => { if (!priorityOrder.includes(id)) priorityOrder.push(id); });
+
+  updateKaushikSchedule();
+  render();
+  calculateCapacity(true);
+}
+
+async function saveAsDefaultRoutine(){
+  try{
+    await storage.set('defaultRoutine', JSON.stringify({
+      wakeTime: document.getElementById('wakeTime').value,
+      sleepTime: document.getElementById('sleepTime').value,
+      dutyStart: document.getElementById('dutyStart').value,
+      dutyEnd: document.getElementById('dutyEnd').value,
+      kaushikWake: document.getElementById('kaushikWake').value,
+      routineTasks,
+      priorityOrder
+    }), false);
+    const statusEl = document.getElementById('defaultStatus');
+    if (statusEl){
+      statusEl.textContent = 'Saved as your daily default ✓';
+      setTimeout(()=> statusEl.textContent = '', 2500);
+    }
+  }catch(e){ console.error(e); }
+}
+
+async function saveProject(id){
+  try{
+    await storage.set('project:' + id, JSON.stringify(state[id]), false);
+  }catch(e){
+    console.error('save failed', e);
+  }
+}
+
+// Whole-word matching only (so "start" no longer counts as "art", "education" not as "cat").
+// Project names count triple. Highest score wins; a tie or no match goes to "Where does this go?".
+const DUMP_KEYWORDS = {
+  sssn: ['sssn', 'save strays', 'purrnest', 'cat', 'cats', 'kitten', 'kittens', 'billi', 'billiyan', 'billiyon', 'caretaker', 'boarding',
+         'rescue', 'vet', 'ngo', 'stray', 'strays', 'adoption', 'adopt', 'litter', 'cat food', 'cat book', 'feeding', 'shelter', 'boarder'],
+  art: ['art', 'art amour', 'painting', 'paint', 'paints', 'swami', 'samarth', 'canvas', 'draw', 'drawing', 'sketch', 'brush', 'colour',
+        'color', 'colours', 'colors', 'acrylic', 'oil paint', 'mandala', 'artwork', 'kala milan', 'exhibition', 'portrait'],
+  railway: ['railway', 'railways', 'irpsm', 'sanction', 'sanctioned', 'projectid', 'project id', 'executive', 'plan head', 'duty',
+            'narrative', 'gm narrative', 'annual report', 'office', 'drm', 'gm', 'tender', 'estimate', 'deletion', 'noting', 'dak'],
+  kaushik: ['kaushik', 'school', 'wonder kids', 'aadhaar', 'baal aadhaar', 'baal', 'homework', 'playschool', 'admission', 'beta',
+            'bachcha', 'baby', 'toy', 'toys', 'vaccination', 'kids', 'rhyme', 'rhymes', 'puzzle'],
+  health: ['health', 'glucose', 'sugar', 'yoga', 'meditation', 'doctor', 'physio', 'cataract', 'breathing', 'exercise', 'walk',
+           'dawai', 'medicine', 'medicines', 'checkup', 'blood test', 'diet', 'bp', 'pranayam', 'gym', 'stretch', 'supplement'],
+  home: ['home', 'ghar', 'house rent', 'ghar ka kiraya', 'kitchen', 'cooking', 'khana', 'grocery', 'groceries', 'ration', 'sabzi',
+         'cleaning', 'safai', 'laundry', 'kapde', 'bartan', 'maid', 'bai', 'bill', 'bills', 'electricity', 'bijli', 'gas', 'cylinder',
+         'water', 'paani ka bill', 'repair', 'plumber', 'electrician', 'carpenter', 'wifi', 'recharge', 'maintenance', 'society',
+         'milk', 'doodh', 'fridge', 'washing machine', 'shopping', 'samaan', 'almirah', 'cupboard'],
+  mba: ['mba', 'study', 'studies', 'padhai', 'exam', 'exams', 'assignment', 'assignments', 'course', 'lecture', 'lectures', 'chapter',
+        'notes', 'dpu', 'semester', 'mock test', 'quiz', 'case study', 'subject', 'syllabus', 'revision', 'revise']
+};
+
+const PROJECT_NAME_WORDS = {
+  sssn: ['sssn'], art: ['art amour', 'art'], railway: ['railway', 'irpsm'], kaushik: ['kaushik'], health: ['health'], mba: ['mba'],
+  home: ['home', 'ghar']
+};
+
+function kwRegex(kw){
+  const body = kw.split(/\s+/).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+');
+  return new RegExp('(^|[^a-z0-9])' + body + '([^a-z0-9]|$)', 'i');
+}
+const KW_REGEX_CACHE = {};
+function hasWord(text, kw){
+  if (!KW_REGEX_CACHE[kw]) KW_REGEX_CACHE[kw] = kwRegex(kw);
+  return KW_REGEX_CACHE[kw].test(text);
+}
+
+// Returns { project, candidates } — project is null when unsure; candidates = best guesses to suggest
+function scoreProjects(line){
+  const lower = line.toLowerCase();
+  const scores = {};
+  PROJECTS.forEach(p => {
+    let sc = 0;
+    (DUMP_KEYWORDS[p.id] || []).forEach(kw => { if (hasWord(lower, kw)) sc += kw.includes(' ') ? 2 : 1; });
+    (PROJECT_NAME_WORDS[p.id] || []).forEach(kw => { if (hasWord(lower, kw)) sc += 3; });
+    scores[p.id] = sc;
+  });
+  const ranked = Object.keys(scores).filter(k => scores[k] > 0).sort((a, b) => scores[b] - scores[a]);
+  if (ranked.length === 0) return { project: null, candidates: [] };
+  if (ranked.length > 1 && scores[ranked[0]] === scores[ranked[1]]){
+    return { project: null, candidates: ranked.filter(k => scores[k] === scores[ranked[0]]) };
+  }
+  return { project: ranked[0], candidates: [ranked[0]] };
+}
+
+// "mba: revise chapter 3" / "#sssn call vet" → forced project, prefix removed
+function explicitProject(line){
+  const m = line.match(/^\s*[#@]?\s*(sssn|art amour|art|railway|kaushik|health|mba|home|ghar)\s*[:\-–—]\s*/i);
+  if (!m) return null;
+  let key = m[1].toLowerCase();
+  if (key === 'art amour') key = 'art';
+  if (key === 'ghar') key = 'home';
+  return { project: key, text: line.slice(m[0].length).trim() };
+}
+
+// "5 baje", "shaam 6 baje", "5:30 pm", "17:00" → "HH:MM"
+function parseTimeFromText(text){
+  const lower = text.toLowerCase();
+  let m = lower.match(/\b(\d{1,2})(?::|\.)(\d{2})(?![.\/-]\d)\s*(am|pm)?\b/);
+  let h = null, min = 0, ampm = null;
+  if (m){ h = parseInt(m[1], 10); min = parseInt(m[2], 10); ampm = m[3] || null; }
+  else {
+    m = lower.match(/\b(\d{1,2})\s*(am|pm|baje)\b/);
+    if (m){ h = parseInt(m[1], 10); ampm = m[2] === 'baje' ? null : m[2]; }
+  }
+  if (h === null || h > 23 || min > 59) return '';
+  if (ampm === 'pm' && h < 12) h += 12;
+  else if (ampm === 'am' && h === 12) h = 0;
+  else if (!ampm && h <= 12){
+    if (/\b(shaam|sham|raat|evening|night)\b/.test(lower)) { if (h < 12) h += 12; }
+    else if (/\b(dopahar|dopaher|afternoon)\b/.test(lower)) { if (h < 12 && h !== 12) h += (h < 6 ? 12 : 0); }
+    else if (/\b(subah|morning)\b/.test(lower)) { if (h === 12) h = 0; }
+    else if (h >= 1 && h <= 6) h += 12; // "4 baje" usually means 4 PM
+  }
+  return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+}
+
+const MONTH_NAMES = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+
+function fmtDate(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function parseDateFromText(text){
+  const lower = text.toLowerCase();
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  // "today" / "aaj"
+  if (/\btoday\b|\baaj\b/.test(lower)) return fmtDate(today);
+
+  // "day after tomorrow" / "parso"
+  if (/\bday after tomorrow\b|\bparso\b|\bparson\b/.test(lower)){
+    const d = new Date(today);
+    d.setDate(d.getDate() + 2);
+    return fmtDate(d);
+  }
+
+  // numeric date: 15/10, 15/10/2026, 15-10-2026, 15.10.26 ("1-2 ghante" is NOT a date)
+  let nd = lower.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/) || lower.match(/\b(\d{1,2})[.-](\d{1,2})[.-](\d{2,4})\b/);
+  if (nd){
+    const day = parseInt(nd[1], 10), mon = parseInt(nd[2], 10) - 1;
+    if (day >= 1 && day <= 31 && mon >= 0 && mon <= 11){
+      let year = nd[3] ? parseInt(nd[3], 10) : today.getFullYear();
+      if (year < 100) year += 2000;
+      let d = new Date(year, mon, day);
+      if (!nd[3] && d < today) d = new Date(year + 1, mon, day);
+      return fmtDate(d);
+    }
+  }
+
+  // weekday: "monday", "somvar ko", "next friday"
+  const WEEKDAYS = [
+    ['sunday', 'ravivar', 'itwar'], ['monday', 'somvar'], ['tuesday', 'mangalvar'], ['wednesday', 'budhvar'],
+    ['thursday', 'guruvar'], ['friday', 'shukravar'], ['saturday', 'shanivar']
+  ];
+  for (let wd = 0; wd < 7; wd++){
+    if (WEEKDAYS[wd].some(n => new RegExp('\\b' + n + '\\b').test(lower))){
+      const d = new Date(today);
+      let diff = (wd - d.getDay() + 7) % 7;
+      if (diff === 0) diff = 7;
+      d.setDate(d.getDate() + diff);
+      return fmtDate(d);
+    }
+  }
+
+  // "tomorrow" / "kal"
+  if (/\btomorrow\b|\bkal\b/.test(lower)){
+    const d = new Date(today);
+    d.setDate(d.getDate() + 1);
+    return fmtDate(d);
+  }
+
+  // "next week"
+  if (/\bnext week\b/.test(lower)){
+    const d = new Date(today);
+    d.setDate(d.getDate() + 7);
+    return fmtDate(d);
+  }
+
+  // "next month"
+  if (/\bnext month\b/.test(lower)){
+    const d = new Date(today);
+    d.setMonth(d.getMonth() + 1);
+    return fmtDate(d);
+  }
+
+  // "next year"
+  if (/\bnext year\b/.test(lower)){
+    const d = new Date(today);
+    d.setFullYear(d.getFullYear() + 1);
+    return fmtDate(d);
+  }
+
+  // day + month name, e.g. "15 august" or "august 15"
+  let m = lower.match(/\b(\d{1,2})(st|nd|rd|th)?\s+(january|february|march|april|may|june|july|august|september|october|november|december)\b/);
+  if (!m) m = lower.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})(st|nd|rd|th)?\b/);
+  if (m){
+    let day, monthName;
+    if (MONTH_NAMES.includes(m[1])){ monthName = m[1]; day = parseInt(m[2], 10); }
+    else { day = parseInt(m[1], 10); monthName = m[3]; }
+    const monthIdx = MONTH_NAMES.indexOf(monthName);
+    let year = today.getFullYear();
+    let candidate = new Date(year, monthIdx, day);
+    if (candidate < today) candidate = new Date(year + 1, monthIdx, day);
+    return fmtDate(candidate);
+  }
+
+  // "next <month name>" (no day given — defaults to the 1st)
+  m = lower.match(/\bnext\s+(january|february|march|april|may|june|july|august|september|october|november|december)\b/);
+  if (m){
+    const monthIdx = MONTH_NAMES.indexOf(m[1]);
+    let year = today.getFullYear();
+    if (monthIdx <= today.getMonth()) year += 1;
+    return fmtDate(new Date(year, monthIdx, 1));
+  }
+
+  // bare month name, e.g. "in July" — nearest upcoming occurrence
+  m = lower.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\b/);
+  if (m){
+    const monthIdx = MONTH_NAMES.indexOf(m[1]);
+    let year = today.getFullYear();
+    if (monthIdx < today.getMonth()) year += 1;
+    return fmtDate(new Date(year, monthIdx, 1));
+  }
+
+  return null;
+}
+
+function splitThoughts(text){
+  return text
+    .split(/\n+|(?<=[.!?;।])\s+/)
+    .map(s => s.replace(/^\s*(?:[-•*]|\d+[.)])\s+/, '').trim())
+    .filter(s => s.length > 1);
+}
+
+function categoryFor(line, date){
+  const lower = line.toLowerCase();
+  if (/\b(urgent|turant|asap|emergency|jaldi|immediately|abhi)\b/.test(lower)) return 'urgent';
+  if (/\b(future|someday|eventually|long term|kabhi)\b/.test(lower) || /baad mein/.test(lower)) return 'future';
+  if (date){
+    const d = daysUntil(date);
+    if (d <= 0) return 'urgent';
+    if (d > 7) return 'future';
+  }
+  return 'current';
+}
+
+// Turns raw brain-dump text into goal drafts. Nothing is guessed when unsure:
+// unclear lines come back in `unsure` so the person picks the project with one tap.
+function categorizeLocally(text){
+  const sorted = [];
+  const unsure = [];
+  splitThoughts(text).forEach(raw => {
+    const forced = explicitProject(raw);
+    const line = forced ? forced.text : raw;
+    if (!line) return;
+    const date = parseDateFromText(line) || '';
+    const draft = {
+      text: line.length > 200 ? line.slice(0, 200) + '…' : line,
+      date,
+      startTime: parseTimeFromText(line),
+      category: categoryFor(line, date)
+    };
+    if (forced){ sorted.push(Object.assign({ project: forced.project }, draft)); return; }
+    const { project, candidates } = scoreProjects(line);
+    if (project) sorted.push(Object.assign({ project }, draft));
+    else unsure.push(Object.assign({ id: newGoalId(), candidates }, draft));
+  });
+  return { sorted, unsure };
+}
+
+// ---- Park state: items waiting for a project, and the last batch placed (for review / move) ----
+let unsureThoughts = [];
+let lastParked = [];
+
+async function saveUnsure(){
+  try{ await storage.set('unsureThoughts', JSON.stringify(unsureThoughts), false); }catch(e){}
+}
+
+function addGoalFromDraft(projectId, draft){
+  const s = state[projectId];
+  const g = makeGoal({
+    text: draft.text, category: draft.category || 'current',
+    date: draft.date || '', startTime: draft.startTime || ''
+  });
+  s.goals.push(g);
+  if (s.stepMode !== 'manual') autoPlanProject(projectId, true);
+  saveProject(projectId);
+  return g;
+}
+
+async function saveDump(){
+  const box = document.getElementById('brainDump');
+  const val = box.value;
+  const statusEl = document.getElementById('dumpStatus');
+  if (!val.trim()){
+    statusEl.textContent = 'Nothing to park';
+    setTimeout(() => statusEl.textContent = '', 2000);
+    return;
+  }
+
+  const { sorted, unsure } = categorizeLocally(val);
+  lastParked = sorted.map(item => {
+    const g = addGoalFromDraft(item.project, item);
+    return { project: item.project, goalId: g.id, text: g.text, date: g.date, startTime: g.startTime };
+  });
+  unsureThoughts = unsureThoughts.concat(unsure);
+  await saveUnsure();
+
+  box.value = '';
+  await storage.set('braindump', '', false);
+
+  const parts = [];
+  if (lastParked.length) parts.push(`${lastParked.length} placed`);
+  if (unsure.length) parts.push(`${unsure.length} need${unsure.length === 1 ? 's' : ''} your tap below`);
+  statusEl.textContent = 'Parked ✓ ' + parts.join(' · ');
+  setTimeout(() => statusEl.textContent = '', 6000);
+
+  render();
+}
+
+function assignUnsure(itemId, projectId){
+  const i = unsureThoughts.findIndex(t => t.id === itemId);
+  if (i < 0) return;
+  const item = unsureThoughts.splice(i, 1)[0];
+  const g = addGoalFromDraft(projectId, item);
+  lastParked.push({ project: projectId, goalId: g.id, text: g.text, date: g.date, startTime: g.startTime });
+  saveUnsure();
+  render();
+}
+
+function dismissUnsure(itemId){
+  unsureThoughts = unsureThoughts.filter(t => t.id !== itemId);
+  saveUnsure();
+  renderParkPanel();
+}
+
+function moveGoal(fromId, goalId, toId){
+  if (fromId === toId) return;
+  const from = state[fromId], to = state[toId];
+  const idx = from.goals.findIndex(g => g.id === goalId);
+  if (idx < 0) return;
+  const g = from.goals.splice(idx, 1)[0];
+  to.goals.push(g);
+  if (from.stepMode !== 'manual') autoPlanProject(fromId, true);
+  else if (from.stepGoalId === goalId){ from.stepGoalId = null; from.focusIdx = null; }
+  if (to.stepMode !== 'manual') autoPlanProject(toId, true);
+  saveProject(fromId);
+  saveProject(toId);
+  const rec = lastParked.find(r => r.goalId === goalId);
+  if (rec) rec.project = toId;
+  render();
+}
+
+function renderParkPanel(){
+  const el = document.getElementById('parkPanel');
+  if (!el) return;
+  const projChip = (p, onclick, suggested) =>
+    `<button class="chip${suggested ? ' suggested' : ''}" style="color:${p.color};${suggested ? `background:${p.color};border-color:${p.color};` : ''}" onclick="${onclick}">${esc(p.name)}</button>`;
+
+  let html = '';
+  if (unsureThoughts.length){
+    html += `<h4>🤔 Where does this go? Tap a project</h4>`;
+    html += unsureThoughts.map(t => {
+      const when = [t.date ? prettyDate(t.date) : '', t.startTime ? minutesToTime12(timeToMinutes(t.startTime)) : ''].filter(Boolean).join(' · ');
+      const chips = PROJECTS.map(p => projChip(p, `assignUnsure('${t.id}','${p.id}')`, (t.candidates || []).includes(p.id))).join('');
+      return `<div class="parkItem">
+        <div class="txt">${esc(t.text)}${when ? ` <span style="color:#9a9484;font-size:12.5px;">(${esc(when)})</span>` : ''}</div>
+        <div class="chipRow">${chips}<button class="chip dismiss" onclick="dismissUnsure('${t.id}')">✕ Drop</button></div>
+      </div>`;
+    }).join('');
+  }
+  if (lastParked.length){
+    html += `<h4>✅ Just placed — change the project if it's wrong</h4>`;
+    html += lastParked.map(r => {
+      const p = PROJECTS.find(x => x.id === r.project) || PROJECTS[0];
+      const when = [r.date ? prettyDate(r.date) : '', r.startTime ? minutesToTime12(timeToMinutes(r.startTime)) : ''].filter(Boolean).join(' · ');
+      const opts = PROJECTS.map(x => `<option value="${x.id}" ${x.id === r.project ? 'selected' : ''}>${esc(x.name)}</option>`).join('');
+      return `<div class="placedRow">
+        <span class="dot" style="background:${p.color};"></span>
+        <span class="txt">${esc(r.text)}${when ? ` <span style="color:#9a9484;font-size:12.5px;">(${esc(when)})</span>` : ''}</span>
+        <select onchange="moveGoal('${r.project}','${r.goalId}',this.value)">${opts}</select>
+      </div>`;
+    }).join('');
+    html += `<div class="chipRow" style="margin-top:6px;"><button class="chip dismiss" onclick="lastParked=[];renderParkPanel();">Looks right — hide this</button></div>`;
+  }
+  el.innerHTML = html;
+  const badge = document.getElementById('parkBadge');
+  if (badge){ badge.textContent = unsureThoughts.length || ''; badge.classList.toggle('on', unsureThoughts.length > 0); }
+}
+
+
+// ---------- Tabs: the app opens on Today every time ----------
+function showTab(name){
+  document.querySelectorAll('.tabView').forEach(sec => sec.classList.toggle('active', sec.dataset.tab === name));
+  document.querySelectorAll('#tabBar button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  window.scrollTo(0, 0);
+}
+
+function goToProject(id){
+  showTab('projects');
+  const card = document.querySelector(`.card[data-pid="${id}"]`);
+  if (card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+}
+
+// ---------- Rest day: "Not well today" ----------
+let restDays = {}; // { 'YYYY-MM-DD': { moved: [{ pid, id, oldDate | daily }] } }
+
+function isRestDay(d){ return !!restDays[d || todayStr()]; }
+
+async function saveRestDays(){
+  try{ await storage.set('restDays', JSON.stringify(restDays), false); }catch(e){}
+}
+
+function startRestDay(){
+  const t = todayStr();
+  if (restDays[t]) return;
+  const tomorrow = addDaysStr(t, 1);
+  const moved = [];
+  PROJECTS.forEach(p => {
+    const s = state[p.id];
+    (s.goals || []).forEach(g => {
+      if (!g || !g.text || g.category === 'urgent' || isLightGoal(g)) return; // urgent and sitting tasks stay
+      if (g.isDaily){
+        if (!g.statusByDate) g.statusByDate = {};
+        if (!g.statusByDate[t] || g.statusByDate[t] === 'pending'){
+          g.statusByDate[t] = 'rest';
+          moved.push({ pid: p.id, id: g.id, daily: true });
+        }
+      } else if ((g.status || 'pending') === 'pending' && g.date && g.date <= t){
+        moved.push({ pid: p.id, id: g.id, oldDate: g.date });
+        g.date = tomorrow; // moved, not skipped — no mark against you
+      }
+    });
+    saveProject(p.id);
+  });
+  restDays[t] = { moved };
+  saveRestDays();
+  autoPlanAll(true);
+  render();
+  window.scrollTo(0, 0);
+}
+
+function endRestDay(){
+  const t = todayStr();
+  const rec = restDays[t];
+  if (!rec) return;
+  const tomorrow = addDaysStr(t, 1);
+  (rec.moved || []).forEach(m => {
+    const g = ((state[m.pid] || {}).goals || []).find(x => x.id === m.id);
+    if (!g) return;
+    if (m.daily){
+      if (g.statusByDate && g.statusByDate[t] === 'rest') delete g.statusByDate[t];
+    } else if (g.date === tomorrow && (g.status || 'pending') === 'pending'){
+      g.date = m.oldDate;
+    }
+  });
+  PROJECTS.forEach(p => saveProject(p.id));
+  delete restDays[t];
+  saveRestDays();
+  autoPlanAll(true);
+  render();
+}
+
+function renderRestBox(){
+  const el = document.getElementById('restBox');
+  if (!el) return;
+  const t = todayStr();
+  const trip = tripOn(t);
+  if (trip){
+    const urgentToday = [];
+    PROJECTS.forEach(p => (state[p.id].goals || []).forEach(g => {
+      if (g && g.text && g.category === 'urgent' && goalStatusToday(g) === 'pending') urgentToday.push(`${p.name}: ${g.text}`);
+    }));
+    el.innerHTML = `<div class="restCard">
+      <h3>✈️ ${esc(trip.label)}</h3>
+      <p>${prettyDate(trip.from)}${trip.to !== trip.from ? ' – ' + prettyDate(trip.to) : ''}. Enjoy — everything else waits till you're back.</p>
+      ${urgentToday.length ? `<p><b>Only urgent:</b></p><ul>${urgentToday.map(u => `<li>${esc(u)}</li>`).join('')}</ul>` : '<p>Nothing urgent today. 🙂</p>'}
+      <button class="undo" onclick="endTripEarly('${trip.id}')">I'm back — normal plan from today</button>
+    </div>`;
+    return;
+  }
+  if (!isRestDay(t)){
+    el.innerHTML = `<button class="restBtn" onclick="startRestDay()">🤒 Not well today / low energy
+      <small>Everything non-urgent moves to tomorrow — no guilt. The report counts this as a rest day, not skipped.</small></button>`;
+    return;
+  }
+  const rec = restDays[t];
+  const movedCount = (rec.moved || []).length;
+  const lightToday = [];
+  PROJECTS.forEach(p => (state[p.id].goals || []).forEach((g, idx) => {
+    if (!g || !g.text || g.category === 'urgent') return;
+    if (goalStatusToday(g) !== 'pending' || !isLightGoal(g)) return;
+    if (!g.isDaily && g.date && g.date > t) return; // not due yet
+    lightToday.push({ pid: p.id, idx, name: p.name, color: p.color, text: g.text });
+  }));
+  const urgentLeft = [];
+  PROJECTS.forEach(p => (state[p.id].goals || []).forEach(g => {
+    if (g && g.text && g.category === 'urgent' && goalStatusToday(g) === 'pending') urgentLeft.push(`${p.name}: ${g.text}`);
+  }));
+  el.innerHTML = `<div class="restCard">
+    <h3>🌿 Today is a rest day</h3>
+    <p>Resting is work too. The body comes first — the rest follows.</p>
+    <p>${movedCount ? `${movedCount} task${movedCount > 1 ? 's' : ''} moved to tomorrow.` : 'Nothing needed moving today.'} Tomorrow morning the app builds a fresh plan.</p>
+    ${urgentLeft.length
+      ? `<p><b>Only these urgent ones are left</b> (if you can — otherwise they wait too):</p><ul>${urgentLeft.map(u => `<li>${esc(u)}</li>`).join('')}</ul>`
+      : ''}
+    ${lightToday.length ? `<p><b>Only if you feel like it — things you can do sitting down:</b></p>
+      <div class="lightList">${lightToday.map(l => `
+        <div class="lightRow">
+          <span class="proj" style="background:${l.color};">${esc(l.name)}</span>
+          <span class="what">${esc(l.text)}</span>
+          <button class="tick" title="Mark done" onclick="setGoalStatus('${l.pid}', ${l.idx}, 'completed')">✓</button>
+        </div>`).join('')}</div>` : ''}
+    <p>Just this much today, if you feel like it:</p>
+    <ul>
+      <li>💧 Keep sipping water</li>
+      <li>💊 Medicines / supplements on time</li>
+      <li>🛏️ 20 min with your eyes closed instead of the phone</li>
+    </ul>
+    <button class="undo" onclick="endRestDay()">I'm fine — bring my plan back</button>
+  </div>`;
+}
+
+
+// ---------- Out of station / event ----------
+let trips = []; // [{ id, label, from, to, moved: [{ pid, id, oldDate }] }]
+
+function tripOn(d){ return trips.find(tr => d >= tr.from && d <= tr.to) || null; }
+function isOffDay(d){ return isRestDay(d) || !!tripOn(d); }
+
+async function saveTrips(){
+  try{ await storage.set('trips', JSON.stringify(trips), false); }catch(e){}
+}
+
+function addTrip(){
+  const from = document.getElementById('tripFrom').value;
+  const to = document.getElementById('tripTo').value || from;
+  const label = (document.getElementById('tripLabel').value || '').trim() || 'Out of station';
+  const msg = document.getElementById('tripMsg');
+  if (!from){ msg.textContent = 'Pick a "From" date first.'; return; }
+  if (to < from){ msg.textContent = 'The "To" date can\'t be before the "From" date.'; return; }
+  const back = addDaysStr(to, 1);
+  const moved = [];
+  PROJECTS.forEach(p => {
+    (state[p.id].goals || []).forEach(g => {
+      if (!g || !g.text || g.isDaily || g.category === 'urgent') return;
+      if ((g.status || 'pending') === 'pending' && g.date && g.date >= from && g.date <= to){
+        moved.push({ pid: p.id, id: g.id, oldDate: g.date });
+        g.date = back; // shifts to the day after you're back
+      }
+    });
+    saveProject(p.id);
+  });
+  trips.push({ id: newGoalId(), label, from, to, moved });
+  trips.sort((a, b) => a.from < b.from ? -1 : 1);
+  saveTrips();
+  tripFormOpen = false;
+  autoPlanAll(true);
+  render();
+}
+
+function deleteTrip(id){
+  const tr = trips.find(x => x.id === id);
+  if (!tr) return;
+  const back = addDaysStr(tr.to, 1);
+  (tr.moved || []).forEach(m => {
+    const g = ((state[m.pid] || {}).goals || []).find(x => x.id === m.id);
+    if (g && g.date === back && (g.status || 'pending') === 'pending') g.date = m.oldDate;
+  });
+  PROJECTS.forEach(p => saveProject(p.id));
+  trips = trips.filter(x => x.id !== id);
+  saveTrips();
+  autoPlanAll(true);
+  render();
+}
+
+// Came back early: the trip now ends yesterday (or is removed if it started today)
+function endTripEarly(id){
+  const tr = trips.find(x => x.id === id);
+  if (!tr) return;
+  const t = todayStr();
+  if (tr.from >= t){ deleteTrip(id); return; }
+  tr.to = addDaysStr(t, -1);
+  saveTrips();
+  autoPlanAll(true);
+  render();
+}
+
+let tripFormOpen = false;
+function renderTripBox(){
+  const el = document.getElementById('tripBox');
+  if (!el) return;
+  const t = todayStr();
+  const upcoming = trips.filter(tr => tr.to >= t);
+  const list = upcoming.map(tr => `
+    <div class="tripRow">
+      <span class="tripWhen">${prettyDate(tr.from)}${tr.to !== tr.from ? ' – ' + prettyDate(tr.to) : ''}</span>
+      <span class="tripName">✈️ ${esc(tr.label)}${(tr.moved || []).length ? ` <span style="color:#9a9484;">· ${tr.moved.length} task${tr.moved.length > 1 ? 's' : ''} moved</span>` : ''}</span>
+      <button class="tripDel" onclick="deleteTrip('${tr.id}')" title="Remove">✕</button>
+    </div>`).join('');
+  const form = tripFormOpen ? `
+    <div class="tripForm">
+      <label>What is it? <input type="text" id="tripLabel" placeholder="e.g. wedding in Nagpur, office training"></label>
+      <div class="tripDates">
+        <label>From <input type="date" id="tripFrom" value="${t}"></label>
+        <label>To <input type="date" id="tripTo" value="${t}"></label>
+      </div>
+      <div class="tripMsg" id="tripMsg"></div>
+      <div class="tripBtns">
+        <button class="tripSave" onclick="addTrip()">Save</button>
+        <button class="tripCancel" onclick="tripFormOpen=false;renderTripBox()">Cancel</button>
+      </div>
+      <div class="stepHint">Non-urgent tasks on these days move to the day after you're back. The report counts these days as "Away", not skipped.</div>
+    </div>`
+    : `<button class="restBtn trip" onclick="tripFormOpen=true;renderTripBox()">✈️ Add out of station / event
+        <small>Wedding, training, trip — set the dates in advance.</small></button>`;
+  el.innerHTML = (upcoming.length ? `<div class="tripList"><div class="planSub" style="margin-top:0;">Coming up / ongoing</div>${list}</div>` : '') + form;
+}
+
+let showAllPlan = false;
+
+// One tap instead of pressing "Suggest for me" in every project
+function replanToday(){
+  PROJECTS.forEach(p => {
+    const s = state[p.id];
+    if (s.stepMode === 'manual'){ s.stepMode = 'auto'; s.stepGoalId = null; }
+  });
+  autoPlanAll(true);
+  render();
+}
+
+// ---- Plan by day: pick any date, see everything scheduled that day (timed items first) ----
+let planDay = null; // null = today
+
+function addDaysStr(base, n){
+  const [y, m, d] = base.split('-').map(Number);
+  return fmtDate(new Date(y, m - 1, d + n));
+}
+
+function statusOnDate(g, d){
+  if (!g.isDaily) return g.status || 'pending';
+  const explicit = g.statusByDate && g.statusByDate[d];
+  if ((!explicit || explicit === 'pending') && tripOn(d) && g.category !== 'urgent') return 'away';
+  return explicit || 'pending';
+}
+
+// Every goal that falls on date d, across all projects
+function goalsOnDate(d){
+  const t = todayStr();
+  const list = [];
+  PROJECTS.forEach(p => {
+    (state[p.id].goals || []).forEach((g, idx) => {
+      if (!g || !g.text || !g.text.trim()) return;
+      if (g.isDaily || g.date === d){
+        list.push({ p, g, idx, status: statusOnDate(g, d), overdue: false });
+      } else if (d === t && !g.isDaily && g.date && g.date < t && (g.status || 'pending') === 'pending'){
+        list.push({ p, g, idx, status: 'pending', overdue: true }); // unfinished from earlier days
+      }
+    });
+  });
+  return list.sort((a, b) => {
+    const ta = a.g.startTime ? timeToMinutes(a.g.startTime) : (a.overdue ? -1 : 2000);
+    const tb = b.g.startTime ? timeToMinutes(b.g.startTime) : (b.overdue ? -1 : 2000);
+    return ta - tb;
+  });
+}
+
+function selectPlanDay(d){
+  planDay = (d === todayStr()) ? null : d;
+  renderTodayPlan();
+}
+
+function renderTodayPlan(){
+  renderRestBox();
+  renderTripBox();
+  const title = document.getElementById('todayTitle');
+  if (title) title.textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+  const el = document.getElementById('planPanel');
+  if (!el) return;
+  const t = todayStr();
+  const sel = planDay || t;
+
+  // Day strip: today + next 6 days, each with how many things are scheduled
+  const strip = [];
+  for (let i = 0; i < 7; i++){
+    const d = addDaysStr(t, i);
+    const [y, m, dd] = d.split('-').map(Number);
+    const dt = new Date(y, m - 1, dd);
+    const label = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : dt.toLocaleDateString('en-IN', { weekday: 'short' });
+    const pendingCount = goalsOnDate(d).filter(x => x.status === 'pending').length;
+    strip.push(`<button class="dayBtn${d === sel ? ' active' : ''}" onclick="selectPlanDay('${d}')">
+      <span class="dl">${tripOn(d) ? '✈️ ' : ''}${label}</span><span class="dd">${dd} ${dt.toLocaleDateString('en-IN', { month: 'short' })}</span>
+      ${pendingCount ? `<span class="cnt">${pendingCount}</span>` : ''}
+    </button>`);
+  }
+
+  const [sy, sm, sd] = sel.split('-').map(Number);
+  const selDate = new Date(sy, sm - 1, sd);
+  const heading = selDate.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: sy !== new Date().getFullYear() ? 'numeric' : undefined });
+
+  let html = `<h3>📋 Plan by day</h3>
+    <div class="dayStrip">${strip.join('')}
+      <label class="dayBtn pick" title="Any other date">📅<input type="date" value="${sel}" onchange="if(this.value) selectPlanDay(this.value)"></label>
+    </div>
+    <div class="dayHeading">${esc(heading)}${sel < t ? ' · past day' : ''}</div>
+    ${tripOn(sel) ? `<div class="restNote">✈️ Away: ${esc(tripOn(sel).label)} — only urgent things count this day.</div>` : ''}`;
+
+  // Today only: the one step picked for each project
+  if (sel === t){
+    const rows = priorityOrder.map((id, pos) => {
+      const p = PROJECTS.find(x => x.id === id);
+      const s = state[id];
+      if (!p || !s || !s.step) return null;
+      if (isOffDay(t) && !s.stepGoalId) return null; // rest / away day: show only real (urgent) work
+      const g = s.stepGoalId ? (s.goals || []).find(x => x.id === s.stepGoalId) : null;
+      const timed = g && g.startTime && (g.isDaily || g.date === t);
+      const overdue = g && !g.isDaily && g.date && g.date < t;
+      const dueToday = g && !timed && (g.isDaily || g.date === t);
+      const sortKey = timed ? timeToMinutes(g.startTime)
+        : 2000 + pos + (overdue ? -600 : g && g.category === 'urgent' ? -500 : dueToday ? -400 : 0);
+      return { p, s, sortKey, done: s.lastDone === t };
+    }).filter(Boolean).sort((a, b) => a.sortKey - b.sortKey);
+
+    const rowHtml = r => `
+        <div class="planRow${r.done ? ' done' : ''}" onclick="goToProject('${r.p.id}')">
+          <span class="proj" style="background:${r.p.color};">${esc(r.p.name)}</span>
+          <span class="what">${esc(r.s.step.split('\n')[0])}</span>
+          <button class="tick" title="Mark this step done" onclick="event.stopPropagation();tickToday('${r.p.id}')">✓</button>
+        </div>`;
+    const TOP = 3;
+    const top = rows.slice(0, TOP), rest = rows.slice(TOP);
+    html += `<div class="planSub">${rows.length > TOP ? `Today's ${TOP} — picked for you` : 'Today — picked for you'}
+        <button class="replanBtn" onclick="event.stopPropagation();replanToday()" title="Pick again">🔄 Pick again</button></div>` +
+      (rows.length ? top.map(rowHtml).join('') : '<div class="stepHint">Add goals to your projects and today\'s plan builds itself.</div>') +
+      (rest.length
+        ? (showAllPlan
+            ? rest.map(rowHtml).join('') + `<button class="moreBtn" onclick="showAllPlan=false;renderTodayPlan()">Show only ${TOP}</button>`
+            : `<button class="moreBtn" onclick="showAllPlan=true;renderTodayPlan()">+ Show ${rest.length} more project${rest.length > 1 ? 's' : ''}</button>`)
+        : '');
+  }
+
+  // Everything scheduled on the selected day
+  const items = goalsOnDate(sel);
+  html += `<div class="planSub">Scheduled ${sel === t ? 'today' : 'this day'} (${items.length})</div>`;
+  if (!items.length){
+    html += `<div class="stepHint">Nothing scheduled for this day. Give a goal this date (or tick 🔁 Daily) and it shows up here.</div>`;
+  } else {
+    html += items.map(x => {
+      const when = x.g.startTime
+        ? `${minutesToTime12(timeToMinutes(x.g.startTime))}${x.g.endTime ? '<br><span style="color:#9a9484;font-weight:400;">to ' + minutesToTime12(timeToMinutes(x.g.endTime)) + '</span>' : ''}`
+        : (x.overdue ? `<span style="color:#B4231F;">Overdue</span>` : 'Any time');
+      const badge = x.status === 'completed' ? '<span class="sBadge done">Done</span>'
+        : x.status === 'postponed' ? '<span class="sBadge post">Postponed</span>'
+        : x.status === 'cancelled' ? '<span class="sBadge canc">Cancelled</span>'
+        : x.status === 'rest' ? '<span class="sBadge rest">🌿 Rest</span>'
+        : x.status === 'away' ? '<span class="sBadge rest">✈️ Away</span>' : '';
+      const tick = (sel === t && x.status === 'pending')
+        ? `<button class="tick" title="Mark this goal done" onclick="event.stopPropagation();setGoalStatus('${x.p.id}', ${x.idx}, 'completed')">✓</button>` : '';
+      return `<div class="schedRow${x.status !== 'pending' ? ' dim' : ''}">
+        <span class="when">${when}</span>
+        <span class="what"><span class="proj" style="background:${x.p.color};">${esc(x.p.name)}</span>
+          ${x.g.category === 'urgent' ? '🔴 ' : ''}${x.g.isDaily ? '🔁 ' : ''}${esc(x.g.text)}${x.overdue ? ` <span style="color:#9a9484;">(was ${prettyDate(x.g.date)})</span>` : ''} ${badge}</span>
+        ${tick}
+      </div>`;
+    }).join('');
+  }
+  el.innerHTML = html;
+}
+
+// ---- Report: Done / Pending / Skipped for a day, week or month ----
+let reportMode = 'day';   // 'day' | 'week' | 'month'
+let reportOffset = 0;     // 0 = current, -1 = previous, ...
+
+const REPORT_COLORS = { done: '#639922', skipped: '#EF9F27', pending: '#C9C5B9' };
+
+function reportRange(){
+  const t = todayStr();
+  const [y, m, d] = t.split('-').map(Number);
+  if (reportMode === 'day'){
+    const day = addDaysStr(t, reportOffset);
+    return { start: day, end: day };
+  }
+  if (reportMode === 'week'){
+    const now = new Date(y, m - 1, d);
+    const mondayShift = (now.getDay() + 6) % 7; // Monday-start week
+    const start = addDaysStr(t, -mondayShift + reportOffset * 7);
+    return { start, end: addDaysStr(start, 6) };
+  }
+  const first = new Date(y, m - 1 + reportOffset, 1);
+  const last = new Date(first.getFullYear(), first.getMonth() + 1, 0);
+  return { start: fmtDate(first), end: fmtDate(last) };
+}
+
+function reportLabel(start, end){
+  const f = (s, o) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', o); };
+  if (reportMode === 'day'){
+    if (start === todayStr()) return 'Today';
+    if (start === addDaysStr(todayStr(), -1)) return 'Yesterday';
+    return f(start, { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+  if (reportMode === 'week') return `${f(start, { day: 'numeric', month: 'short' })} – ${f(end, { day: 'numeric', month: 'short' })}`;
+  return f(start, { month: 'long', year: 'numeric' });
+}
+
+// One row per (goal, day) that falls in the period
+function collectReport(start, end){
+  const t = todayStr();
+  const lastDay = end < t ? end : t; // pending only counts for days that have arrived
+  const rows = [];
+  PROJECTS.forEach(p => {
+    (state[p.id].goals || []).forEach(g => {
+      if (!g || !g.text || !g.text.trim()) return;
+      if (g.isDaily){
+        for (let d = start; d <= lastDay; d = addDaysStr(d, 1)){
+          if (g.createdOn && d < g.createdOn) continue;
+          rows.push({ p, g, date: d, status: statusOnDate(g, d) });
+        }
+      } else {
+        const log = g.log || {};
+        Object.keys(log).filter(d => d >= start && d <= end).forEach(d => rows.push({ p, g, date: d, status: log[d] }));
+        // finished before this report existed (no log yet) → count it on its scheduled date
+        if (!Object.keys(log).length && (g.status || 'pending') !== 'pending' && g.date && g.date >= start && g.date <= end){
+          rows.push({ p, g, date: g.date, status: g.status });
+        }
+        // still open and due inside the period
+        if ((g.status || 'pending') === 'pending' && g.date && g.date >= start && g.date <= lastDay && !log[g.date]){
+          rows.push({ p, g, date: g.date, status: 'pending' });
+        }
+      }
+    });
+  });
+  return rows;
+}
+
+function bucketOf(status){
+  if (status === 'rest') return 'rest';
+  if (status === 'completed') return 'done';
+  if (status === 'postponed' || status === 'cancelled') return 'skipped';
+  return 'pending';
+}
+
+function setReport(mode, offsetDelta){
+  if (mode) { reportMode = mode; reportOffset = 0; }
+  if (offsetDelta) reportOffset = Math.min(0, reportOffset + offsetDelta);
+  renderReport();
+}
+
+function renderReport(){
+  const el = document.getElementById('reportPanel');
+  if (!el) return;
+  const { start, end } = reportRange();
+  const rows = collectReport(start, end).filter(r => r.status !== 'rest' && r.status !== 'away');
+  const restCount = Object.keys(restDays).filter(d => d >= start && d <= end).length;
+  let awayCount = 0;
+  for (let d = start; d <= end; d = addDaysStr(d, 1)) if (tripOn(d)) awayCount++;
+  const tot = { done: 0, pending: 0, skipped: 0, postponed: 0, cancelled: 0 };
+  rows.forEach(r => { tot[bucketOf(r.status)]++; if (r.status === 'postponed') tot.postponed++; if (r.status === 'cancelled') tot.cancelled++; });
+  const all = tot.done + tot.pending + tot.skipped;
+  const pct = n => all ? Math.round(n / all * 100) : 0;
+
+  const tab = (m, label) => `<button class="rTab${reportMode === m ? ' active' : ''}" onclick="setReport('${m}')">${label}</button>`;
+  let html = `<h3>📊 Report</h3>
+    <div class="rTabs">${tab('day', 'Daily')}${tab('week', 'Weekly')}${tab('month', 'Monthly')}</div>
+    <div class="rNav">
+      <button onclick="setReport(null,-1)" aria-label="Previous">‹</button>
+      <span>${esc(reportLabel(start, end))}</span>
+      <button onclick="setReport(null,1)" aria-label="Next" ${reportOffset >= 0 ? 'disabled' : ''}>›</button>
+    </div>`;
+
+  const offBits = [];
+  if (restCount) offBits.push(`🌿 ${restCount} rest day${restCount > 1 ? 's' : ''}`);
+  if (awayCount) offBits.push(`✈️ ${awayCount} day${awayCount > 1 ? 's' : ''} away`);
+  const restNote = offBits.length
+    ? `<div class="restNote">${offBits.join(' · ')} — not counted as skipped.</div>` : '';
+
+  // Open goals with no date at all — the report can't place them on a day, so they're shown separately
+  const undated = [];
+  PROJECTS.forEach(p => (state[p.id].goals || []).forEach((g, idx) => {
+    if (!g || !g.text || !g.text.trim() || g.isDaily || g.date) return;
+    if ((g.status || 'pending') !== 'pending') return;
+    undated.push({ p, g, idx });
+  }));
+  const undatedNote = undated.length
+    ? `<div class="restNote" style="background:#FAF3E6;color:#6b5330;">📌 ${undated.length} open goal${undated.length > 1 ? 's have' : ' has'} no date — ${undated.length > 1 ? "they aren't" : "it isn't"} counted here. Give ${undated.length > 1 ? 'them' : 'it'} a date (or 🔁 Daily) in Projects to see ${undated.length > 1 ? 'them' : 'it'} here.</div>`
+    : '';
+  if (!all){
+    el.innerHTML = html + restNote + undatedNote +
+      `<div class="stepHint">Nothing was scheduled in this period, so there is nothing to count yet.<br>
+       The report counts a goal on the day it is <b>due</b> (its date), every day for a <b>🔁 Daily</b> goal,
+       and on the day you mark it <b>Done / Postponed / Cancelled</b>.</div>` +
+      (undated.length ? `<div class="planSub">Open goals without a date</div>` + undated.slice(0, 15).map(u => `
+        <div class="rItem"><span class="proj" style="background:${u.p.color};">${esc(u.p.name)}</span>
+          <span class="what">${esc(u.g.text)}</span></div>`).join('') : '');
+    return;
+  }
+
+  html += `<div class="rTiles">
+      <div class="rTile"><div class="rNum">${tot.done}</div><div class="rLbl"><span class="dot" style="background:${REPORT_COLORS.done}"></span>Done · ${pct(tot.done)}%</div></div>
+      <div class="rTile"><div class="rNum">${tot.pending}</div><div class="rLbl"><span class="dot" style="background:${REPORT_COLORS.pending}"></span>Pending</div></div>
+      <div class="rTile"><div class="rNum">${tot.skipped}</div><div class="rLbl"><span class="dot" style="background:${REPORT_COLORS.skipped}"></span>Skipped</div>
+        <div class="rSub">${tot.postponed} postponed · ${tot.cancelled} cancelled</div></div>
+    </div>
+    ${restNote}${undatedNote}
+    <div class="rBar" title=""${tot.done} done, ${tot.pending} pending, ${tot.skipped} skipped">
+      ${['done', 'skipped', 'pending'].filter(k => tot[k]).map(k => `<div style="flex:${tot[k]};background:${REPORT_COLORS[k]}"></div>`).join('')}
+    </div>`;
+
+  // Day-by-day columns for week / month
+  if (reportMode !== 'day'){
+    const days = [];
+    for (let d = start; d <= end; d = addDaysStr(d, 1)) days.push(d);
+    const perDay = days.map(d => {
+      const c = { done: 0, pending: 0, skipped: 0 };
+      rows.filter(r => r.date === d).forEach(r => c[bucketOf(r.status)]++);
+      return { d, c, n: c.done + c.pending + c.skipped };
+    });
+    const max = Math.max(1, ...perDay.map(x => x.n));
+    html += `<div class="rCols${reportMode === 'month' ? ' month' : ''}">` + perDay.map(x => {
+      const [yy, mm, dd] = x.d.split('-').map(Number);
+      const dt = new Date(yy, mm - 1, dd);
+      const lbl = reportMode === 'week' ? dt.toLocaleDateString('en-IN', { weekday: 'narrow' }) : (dd === 1 || dd % 5 === 0 ? dd : '');
+      const tip = `${dt.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })}: ${x.c.done} done, ${x.c.pending} pending, ${x.c.skipped} skipped`;
+      const segs = ['pending', 'skipped', 'done'].filter(k => x.c[k])
+        .map(k => `<div style="height:${x.c[k] / max * 100}%;background:${REPORT_COLORS[k]}"></div>`).join('');
+      return `<div class="rCol${x.d === todayStr() ? ' today' : ''}${restDays[x.d] ? ' rest' : ''}" title="${restDays[x.d] ? '🌿 Rest day · ' : ''}${tip}" onclick="reportMode='day';reportOffset=${daysUntil(x.d)};renderReport()">
+        <div class="rStack">${restDays[x.d] ? '<div class="restMark">🌿</div>' : tripOn(x.d) ? '<div class="restMark">✈️</div>' : ''}${segs}</div><div class="rDay">${lbl}</div></div>`;
+    }).join('') + `</div><div class="stepHint">Tap a day to open its daily report.</div>`;
+  }
+
+  // Per-project table
+  html += `<table class="rTable"><thead><tr><th>Project</th><th>Done</th><th>Pending</th><th>Skipped</th></tr></thead><tbody>` +
+    PROJECTS.map(p => {
+      const c = { done: 0, pending: 0, skipped: 0 };
+      rows.filter(r => r.p.id === p.id).forEach(r => c[bucketOf(r.status)]++);
+      if (!c.done && !c.pending && !c.skipped) return '';
+      return `<tr><td><span class="dot" style="background:${p.color}"></span>${esc(p.name)}</td><td>${c.done}</td><td>${c.pending}</td><td>${c.skipped}</td></tr>`;
+    }).join('') + `</tbody></table>`;
+
+  // What to work on: pending + skipped items
+  const listOf = (bucket, title) => {
+    const items = rows.filter(r => bucketOf(r.status) === bucket);
+    if (!items.length) return '';
+    const shown = items.slice(0, 20);
+    return `<div class="planSub">${title} (${items.length})</div>` + shown.map(r => `
+      <div class="rItem"><span class="proj" style="background:${r.p.color};">${esc(r.p.name)}</span>
+        <span class="what">${r.g.isDaily ? '🔁 ' : ''}${esc(r.g.text)}${reportMode !== 'day' ? ` <span style="color:#9a9484;">· ${prettyDate(r.date)}</span>` : ''}${r.status === 'cancelled' ? ' <span class="sBadge canc">Cancelled</span>' : r.status === 'postponed' ? ' <span class="sBadge post">Postponed</span>' : ''}</span></div>`).join('') +
+      (items.length > shown.length ? `<div class="stepHint">+ ${items.length - shown.length} more</div>` : '');
+  };
+  html += listOf('pending', '⏳ Still pending') + listOf('skipped', '⏭ Skipped');
+
+  el.innerHTML = html;
+}
+
+// The ✓ next to today's step: marks that goal Done (and the project done for today).
+// If today's step isn't tied to a goal, it just marks the project done.
+function tickToday(id){
+  const s = state[id];
+  const t = todayStr();
+  const idx = s.stepGoalId ? (s.goals || []).findIndex(g => g.id === s.stepGoalId) : -1;
+  if (idx >= 0 && goalStatusToday(s.goals[idx]) === 'pending'){
+    if (s.lastDone !== t){ s.lastDone = t; s.streak = (s.streak || 0) + 1; }
+    setGoalStatus(id, idx, 'completed'); // also picks your next goal for today
+    return;
+  }
+  toggleDone(id);
+}
+
+function toggleDone(id){
+  const s = state[id];
+  const t = todayStr();
+  if (s.lastDone === t){
+    s.lastDone = '';
+    s.streak = Math.max(0, s.streak - 1);
+  } else {
+    s.lastDone = t;
+    s.streak = (s.streak || 0) + 1;
+  }
+  saveProject(id);
+  render();
+}
+
+// Works everywhere (no AI needed): builds a concrete first move from the focused goal.
+// Each tap gives a different way to start.
+const STEP_TEMPLATES = {
+  urgent: [
+    'Do the first 15 minutes of: {g}',
+    'Before anything else today → {g}',
+    'Send the one message / make the one call that moves: {g}'
+  ],
+  current: [
+    'Next {q} min → continue: {g}',
+    'Write the very next action for "{g}" — then do only that',
+    'Finish one small piece of: {g}'
+  ],
+  future: [
+    '15 min only → list the 3 big parts of: {g}',
+    'Collect what you need for: {g}',
+    'Add the first sub-step of "{g}" as its own goal'
+  ]
+};
+
+function suggestNext(id){
+  const s = state[id];
+  const pool = SUGGESTIONS[id] || [];
+  const quota = assignedMinutes[id] || 25;
+  const g = (s.focusIdx !== null && s.focusIdx !== undefined) ? s.goals[s.focusIdx] : null;
+
+  if (g && g.text && g.text.trim()){
+    const list = STEP_TEMPLATES[g.category] || STEP_TEMPLATES.current;
+    s.tplIdx = ((s.tplIdx || 0) + 1) % (list.length + 1);
+    // position 0 in the cycle = the plain goal step, then the templates
+    s.step = s.tplIdx === 0 ? stepTextFor(g) : list[s.tplIdx - 1].replace('{g}', g.text).replace('{q}', quota);
+    s.stepGoalId = g.id;
+    s.stepMode = 'auto';
+    s.planDate = todayStr();
+  } else if (pool.length){
+    s.step = pool[(s.sugIdx || 0) % pool.length];
+    s.sugIdx = ((s.sugIdx || 0) + 1) % pool.length;
+    s.stepGoalId = null;
+    s.stepMode = 'auto';
+    s.planDate = todayStr();
+  }
+  saveProject(id);
+  render();
+}
+
+function updateStep(id, val){
+  const s = state[id];
+  s.step = val;
+  // Typed by hand → keep it for today; tomorrow the app picks fresh from goals again.
+  // Clearing the box hands control back to auto-pick.
+  if (val.trim()){
+    s.stepMode = 'manual';
+    s.planDate = todayStr();
+  } else {
+    s.stepMode = 'auto';
+    s.stepGoalId = null;
+  }
+  saveProject(id);
+  const card = document.querySelector(`.card[data-pid="${id}"]`);
+  const hint = card && card.querySelector('.stepHint');
+  if (hint) hint.textContent = stepHintFor(id);
+  renderTodayPlan();
+}
+
+function buildHealthSchedule(){
+  const blocks = [];
+
+  // Fixed daily practice — already accounted for in your routine time, not dependent on leftover quota
+  blocks.push('10 min — Breathing exercise');
+  blocks.push('30 min — Yoga (physio-cleared moves only)');
+  blocks.push('20 min — Meditation');
+
+  // Flexible extras — only if there's leftover project quota today
+  const quota = assignedMinutes['health'] || 0;
+  if (quota > 0){
+    let remaining = quota;
+    const push = (label, mins) => {
+      if (remaining > 0){
+        const m = Math.min(mins, remaining);
+        blocks.push(`${m} min — ${label}`);
+        remaining -= m;
+      }
+    };
+    push('Log glucose reading (Contour Plus)', 3);
+    push('Supplement check-in (Gutfit / Multivitamin / Protein, per your timing)', 5);
+    push('Quick check: sun protection if stepping out, IBS-friendly bite if needed', 5);
+  } else {
+    blocks.push('(No extra project slot today for glucose log/supplements — just the fixed practice above.)');
+  }
+
+  state.health.step = blocks.join('\n');
+  state.health.stepMode = 'manual';
+  state.health.planDate = todayStr();
+  saveProject('health');
+  render();
+}
+
+function renderDailyProgress(){
+  const t = todayStr();
+  let completed = 0, postponed = 0, cancelled = 0, pending = 0;
+  PROJECTS.forEach(p => {
+    const s = state[p.id];
+    if (!s || !s.goals) return;
+    s.goals.forEach(g => {
+      const inScopeToday = g.isDaily || g.date === t;
+      if (!inScopeToday) return;
+      const status = g.isDaily ? ((g.statusByDate && g.statusByDate[t]) || 'pending') : (g.status || 'pending');
+      if (status === 'completed') completed++;
+      else if (status === 'postponed') postponed++;
+      else if (status === 'cancelled') cancelled++;
+      else pending++;
+    });
+  });
+
+  const total = completed + postponed + cancelled + pending;
+  const bar = document.getElementById('progressBar');
+  const legend = document.getElementById('progressLegend');
+  if (!bar || !legend) return;
+
+  if (total === 0){
+    bar.innerHTML = `<div class="seg" style="width:100%;background:#EFEBE0;"></div>`;
+    legend.innerHTML = `<span>No tasks scheduled for today yet</span>`;
+    return;
+  }
+
+  const pct = n => (n / total * 100).toFixed(1);
+  bar.innerHTML = `
+    <div class="seg" style="width:${pct(completed)}%;background:#97C459;"></div>
+    <div class="seg" style="width:${pct(postponed)}%;background:#FAC775;"></div>
+    <div class="seg" style="width:${pct(cancelled)}%;background:#F09595;"></div>
+    <div class="seg" style="width:${pct(pending)}%;background:#D3D1C7;"></div>
+  `;
+  legend.innerHTML = `
+    <span><span class="dot" style="background:#639922;"></span>Done: ${completed}</span>
+    <span><span class="dot" style="background:#EF9F27;"></span>Postponed: ${postponed}</span>
+    <span><span class="dot" style="background:#E24B4A;"></span>Cancelled: ${cancelled}</span>
+    <span><span class="dot" style="background:#888780;"></span>Pending: ${pending}</span>
+  `;
+}
+
+function render(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  const t = todayStr();
+  const ordered = priorityOrder
+    .map(id => PROJECTS.find(p => p.id === id))
+    .filter(Boolean);
+
+  renderDailyProgress();
+  renderParkPanel();
+  renderTodayPlan();
+  renderReport();
+
+  ordered.forEach(p => {
+    const s = state[p.id];
+    const isDone = s.lastDone === t;
+    const hasCapacityData = Object.keys(assignedMinutes).length > 0;
+    const quota = assignedMinutes[p.id];
+    const isParked = hasCapacityData && !isDone && quota === 0;
+
+    const card = document.createElement('div');
+    card.className = 'card' + (isDone ? ' done' : '') + (isParked ? ' parked' : '');
+    card.dataset.pid = p.id;
+    card.style.background = p.bg;
+    card.innerHTML = `
+      <div class="top">
+        ${p.icon}
+        <div class="name">${p.name}</div>
+        <span class="locBadge ${p.location === 'Home' ? 'home' : 'office'}">${p.location}</span>
+        <span class="quota" id="quota-${p.id}" style="color:${p.color};">${hasCapacityData && quota > 0 ? quota + ' min' : ''}</span>
+        <div class="reorder">
+          <button onclick="movePriority('${p.id}', -1)" title="Move priority up">▲</button>
+          <button onclick="movePriority('${p.id}', 1)" title="Move priority down">▼</button>
+        </div>
+      </div>
+      <div class="goalsBox" id="goalsBox-${p.id}"></div>
+      <button class="addGoalBtn" onclick="addGoal('${p.id}')">+ Add goal</button>
+      <div class="focusRow">
+        <span>Today's goal:</span>
+        <select id="focus-${p.id}" onchange="setFocus('${p.id}', this.value)"></select>
+      </div>
+      <div class="stepwrap">
+        <span>Today's one step</span>
+        <button class="suggestBtn" id="sug-${p.id}" onclick="suggestNext('${p.id}')">✨ Suggest for me</button>
+      </div>
+      ${p.id === 'health' ? `<button class="addGoalBtn" style="margin-bottom:6px;" onclick="buildHealthSchedule()">🩺 Build today's health block</button>` : ''}
+      <textarea class="step" ${p.id === 'health' ? 'style="min-height:110px;"' : ''} placeholder="Just this one thing to do today...">${esc(s.step || '')}</textarea>
+      <div class="stepHint">${esc(stepHintFor(p.id))}</div>
+      ${isParked ? `<div class="parkedNote">No capacity left today — parked for tomorrow.</div>` : ''}
+      <div class="bottom">
+        <span class="streak">${s.streak > 0 ? s.streak + ' day streak' : ''}</span>
+        <button class="doneBtn ${isDone ? 'active' : ''}" style="${isDone ? `background:${p.color};border-color:${p.color};` : `border-color:${p.color};color:${p.color};`}" onclick="toggleDone('${p.id}')">${isDone ? 'Done ✓' : 'Mark done today'}</button>
+      </div>
+    `;
+    const ta = card.querySelector('textarea.step');
+    ta.addEventListener('input', (e) => updateStep(p.id, e.target.value));
+    grid.appendChild(card);
+    renderGoalsForProject(p.id);
+  });
+}
+
+async function checkStorageHealth(){
+  const testKey = '__storagetest__';
+  const testVal = String(Date.now());
+  try{
+    await storage.set(testKey, testVal, false);
+    const res = await storage.get(testKey, false);
+    const ok = res && res.value === testVal;
+    if (!ok){
+      const w = document.getElementById('storageWarning');
+      w.style.display = 'block';
+      w.innerHTML = '⚠️ This browser is not reliably saving data between sessions on this device. Please use <b>Export backup</b> regularly and <b>Import backup</b> when you reopen the app, so you never lose your goals.';
+    }
+  }catch(e){
+    const w = document.getElementById('storageWarning');
+    w.style.display = 'block';
+    w.innerHTML = '⚠️ This browser is not saving data at all right now. Please use <b>Export backup</b> regularly and <b>Import backup</b> when you reopen the app.';
+  }
+}
+
+async function exportData(){
+  const dump = {};
+  for (const p of PROJECTS){
+    dump['project:' + p.id] = state[p.id];
+  }
+  dump['braindump'] = document.getElementById('brainDump').value;
+  dump['unsureThoughts'] = unsureThoughts;
+  dump['restDays'] = restDays;
+  dump['trips'] = trips;
+  dump['daycapacity'] = {
+    wakeTime: document.getElementById('wakeTime').value,
+    sleepTime: document.getElementById('sleepTime').value,
+    dutyStart: document.getElementById('dutyStart').value,
+    dutyEnd: document.getElementById('dutyEnd').value,
+    kaushikWake: document.getElementById('kaushikWake').value,
+    routineTasks,
+    priorityOrder
+  };
+  const blob = new Blob([JSON.stringify(dump, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'aaj-ka-kadam-backup-' + todayStr() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importData(file){
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try{
+      const dump = JSON.parse(e.target.result);
+      for (const p of PROJECTS){
+        if (dump['project:' + p.id]){
+          state[p.id] = dump['project:' + p.id];
+          await storage.set('project:' + p.id, JSON.stringify(state[p.id]), false);
+        }
+      }
+      if (dump.braindump !== undefined){
+        document.getElementById('brainDump').value = dump.braindump;
+        await storage.set('braindump', dump.braindump, false);
+      }
+      if (Array.isArray(dump.trips)){
+        trips = dump.trips;
+        await saveTrips();
+      }
+      if (dump.restDays && typeof dump.restDays === 'object'){
+        restDays = dump.restDays;
+        await saveRestDays();
+      }
+      if (Array.isArray(dump.unsureThoughts)){
+        unsureThoughts = dump.unsureThoughts;
+        await saveUnsure();
+      }
+      for (const p of PROJECTS){
+        (state[p.id].goals || []).forEach(g => { if (g && !g.id) g.id = newGoalId(); });
+      }
+      autoPlanAll(false);
+      if (dump.daycapacity){
+        const cap = dump.daycapacity;
+        document.getElementById('wakeTime').value = cap.wakeTime || '';
+        document.getElementById('sleepTime').value = cap.sleepTime || '';
+        document.getElementById('dutyStart').value = cap.dutyStart || '';
+        document.getElementById('dutyEnd').value = cap.dutyEnd || '';
+        document.getElementById('kaushikWake').value = cap.kaushikWake || '';
+        document.getElementById('routineList').innerHTML = '';
+        routineTasks = [];
+        (cap.routineTasks || []).forEach(r => { if (r) addRoutineRow(r.name, r.minutes, r.time, r.goalRef || null); });
+        if (cap.priorityOrder) priorityOrder = cap.priorityOrder;
+        await saveCapacityState();
+        updateKaushikSchedule();
+      }
+      render();
+      calculateCapacity(true);
+      alert('Backup restored successfully.');
+    }catch(err){
+      alert('Could not read this backup file. Please make sure it is a valid export from this app.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+const remindedKeys = new Set();
+
+function enableReminders(){
+  const btn = document.getElementById('reminderBtn');
+  if (!('Notification' in window)){
+    alert('This browser does not support notifications.');
+    return;
+  }
+  Notification.requestPermission().then(perm => {
+    if (perm === 'granted'){
+      btn.textContent = '🔔 Reminders ON';
+      btn.style.background = '#EAF3DE';
+      btn.style.borderColor = '#639922';
+      btn.style.color = '#3B6D11';
+      new Notification('Reminders enabled', { body: "You'll be notified when a scheduled goal's time arrives, as long as this tab stays open." });
+    } else {
+      btn.textContent = '🔔 Enable reminders';
+      alert('Notifications were not allowed. You can enable them from your browser site settings.');
+    }
+  });
+}
+
+function checkReminders(){
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const now = new Date();
+  const todayD = todayStr();
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+  PROJECTS.forEach(p => {
+    const s = state[p.id];
+    if (!s || !s.goals) return;
+    s.goals.forEach((g, idx) => {
+      if (!g.startTime) return;
+      const inScopeToday = g.isDaily || g.date === todayD;
+      if (!inScopeToday) return;
+      const status = g.isDaily ? ((g.statusByDate && g.statusByDate[todayD]) || 'pending') : (g.status || 'pending');
+      if (status !== 'pending') return;
+
+      const goalMinutes = timeToMinutes(g.startTime);
+      if (goalMinutes === null) return;
+
+      // Fire when current time reaches the scheduled minute (within a 2-min window so we don't miss it between checks)
+      if (nowMinutes >= goalMinutes && nowMinutes <= goalMinutes + 2){
+        const key = `${p.id}:${idx}:${todayD}:${g.startTime}`;
+        if (remindedKeys.has(key)) return;
+        remindedKeys.add(key);
+        try{
+          new Notification(`${p.name}: ${g.text || 'Scheduled task'}`, {
+            body: `Scheduled for ${g.startTime}${g.endTime ? ' - ' + g.endTime : ''}`,
+            tag: key
+          });
+        }catch(e){}
+      }
+    });
+  });
+}
+
+setInterval(checkReminders, 30000);
+
+if ('Notification' in window && Notification.permission === 'granted'){
+  const btn = document.getElementById('reminderBtn');
+  if (btn){
+    btn.textContent = '🔔 Reminders ON';
+    btn.style.background = '#EAF3DE';
+    btn.style.borderColor = '#639922';
+    btn.style.color = '#3B6D11';
+  }
+}
+
+// Keep unparked brain-dump text safe while typing
+document.getElementById('brainDump').addEventListener('input', e => {
+  storage.set('braindump', e.target.value, false);
+});
+
+// App left open overnight / reopened from the background → plan the new day by itself
+let lastPlannedDay = todayStr();
+function checkNewDay(){
+  const t = todayStr();
+  if (t !== lastPlannedDay){
+    lastPlannedDay = t;
+    carryOverPostponed();
+    autoPlanAll(false);
+    calculateCapacity(true);
+  }
+}
+setInterval(checkNewDay, 60000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkNewDay(); });
+
+showTab('today');
+loadState();
+checkStorageHealth();
+</script>
+</body>
+</html>
